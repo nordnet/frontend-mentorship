@@ -1,0 +1,9 @@
+language: node_js
+branches:
+  only:
+  - master
+node_js:
+  - lts
+script:
+  - npm run build -s
+  - npm run deploy -s -- --token=$NOW_TOKEN

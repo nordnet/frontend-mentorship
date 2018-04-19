@@ -4,9 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp build",
+    "deploy": "gh-pages -d dist"
   },
+  "homepage": "https://nordnet.github.io/frontend-mentorship",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "cleaver": "^0.8.7",
+    "esm": "^3.0.19",
+    "gh-pages": "^1.1.0",
+    "gulp": "^3.9.1",
+    "gulp-watch": "^5.0.0",
+    "run-sequence": "^2.2.1",
+    "shelljs": "^0.8.1"
+  }
 }
