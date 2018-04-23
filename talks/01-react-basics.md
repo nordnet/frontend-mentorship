@@ -17,6 +17,16 @@ title: JavaScript Introduction
   </small>
 </center>
 
+---
+
+### pre-requisite
+
+* [JavaScript Introduction](/frontend-mentorship/00-js-intro)
+* ["You dont know JS" book](https://github.com/getify/You-Dont-Know-JS/)
+* [es2015/es6 features](https://git.io/es6features)
+* [examples of everything new in ECMAScript 2016, 2017, and 2018](https://medium.freecodecamp.org/here-are-examples-of-everything-new-in-ecmascript-2016-2017-and-2018-d52fa3b5a70e)
+
+but dont worry 🦄
 
 ---
 
@@ -30,16 +40,17 @@ title: JavaScript Introduction
 * Backbone/Ember/Angular/etc
 * React
 
-
 ---
 
 ### React
+
 
 * A JavaScript library for building user interfaces
 * predictable user interfaces
 * Declarative
 * Component-Based
 * Learn Once, Write Anywhere
+* `ui = f(state)`
 
 ---
 
@@ -189,6 +200,13 @@ class ClickCount extends React.Component {
 ```
 ---
 
+### prop-types
+
+TODO
+
+---
+
+
 ### Composition vs Inheritance
 
 Composition won.
@@ -198,13 +216,12 @@ Composition won.
 
 ---
 
-### Get Started
+### Further reading
 
-
+* ["Pure UI"](https://rauchg.com/2015/pure-ui)
 * [Documentation](https://reactjs.org/docs/)
 * [Tutorial](https://reactjs.org/tutorial/tutorial.html)
 * [Create react app](https://github.com/facebook/create-react-app/)
-
 
 ---
 
