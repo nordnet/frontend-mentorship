@@ -5,7 +5,8 @@ const sequence = require('run-sequence');
 
 // prettier-ignore
 const talks = [
-  '00-js-intro'
+  '00-js-intro',
+  '01-react-basics',
 ];
 
 gulp.task('pretalks', done => {
