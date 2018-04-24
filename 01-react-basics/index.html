@@ -388,7 +388,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 <li><a href="https://git.io/es6features">es2015/es6 features</a></li>
 <li><a href="https://medium.freecodecamp.org/here-are-examples-of-everything-new-in-ecmascript-2016-2017-and-2018-d52fa3b5a70e">examples of everything new in ECMAScript 2016, 2017, and 2018</a></li>
 </ul>
-<p>but dont worry 🦄</p>
+<p>but dont worry anyway 🦄</p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-3">
@@ -557,7 +557,22 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   </div>
   <div class="slide hidden -" id="slide-15">
     <section class="slide-content"><h3 id="prop-types">prop-types</h3>
-<p>TODO</p>
+<p>light type system for components. helps in development, removed in production</p>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Greeting</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, {this.props.name}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
+    );
+  }
+}
+
+Greeting.propTypes = {
+  <span class="hljs-attr">name</span>: PropTypes.string
+};
+</code></pre>
+<p><a href="https://reactjs.org/docs/typechecking-with-proptypes.html">https://reactjs.org/docs/typechecking-with-proptypes.html</a></p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-16">
