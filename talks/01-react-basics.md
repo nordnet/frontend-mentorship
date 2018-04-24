@@ -114,6 +114,8 @@ const trainName = 'Trainy McTrainface';
 const element = <h1>Train name is {trainName}!</h1>;
 ```
 
+hurray
+
 ---
 
 ### React Component
@@ -143,16 +145,23 @@ const element = <h1>Train name is {trainName}!</h1>;
 ### functional or stateless
 
 ```js
-const Button = props => (
+const Button = props => {
   const children = props.children;
   const onClick = props.onClick;
   return (
     <button onClick={onClick}>
-      { children }
+      {children}
     </button>
   )
-)
+}
+
+const App = () => (
+  <Button onClick={() => alert('hello')}>
+    alert 'hello'
+  </Button>
+);
 ```
+https://codesandbox.io/s/mm9vqp45nj
 
 ---
 
@@ -161,10 +170,18 @@ const Button = props => (
 ```js
 const Button = ({ children, onClick }) => (
   <button onClick={onClick}>
-    { children }
+    {children}
   </button>
 )
+
+const App = () => (
+  <Button onClick={() => alert('hello')}>
+    alert 'hello'
+  </Button>
+);
 ```
+
+https://codesandbox.io/s/38qjqwyj86
 
 ---
 
@@ -179,7 +196,7 @@ class ClickCount extends React.Component {
     this.state = { counter: 0 }
 
     this.incCounter = () => {
-      this.setState({ counter: this.state + 1 });
+      this.setState({ counter: this.state.counter + 1 });
     }
 
   }
@@ -190,14 +207,21 @@ class ClickCount extends React.Component {
 
     return (
       <div>
-        Number of clicks: { counter }.
+        Number of clicks: {counter}.
         <br />
         <button onClick={incCounter}> Increment counter </button>
       </div>
     )
   }
 }
+
+const App = () => (
+  <ClickCount />
+);
 ```
+
+https://codesandbox.io/s/0o1m35lq3v
+
 ---
 
 ### prop-types
@@ -253,7 +277,7 @@ Simple React App
 * Page Component (enforces page layout, responsive one column)
 * Header Component (Logo, menu of "new", "show" and "submit")
 * Content Component (just highlight and add "content" word in it)
-* Footer Component (always in the bottom, links from "further reading" slide)
+* Footer Component (always in the bottom, links from "further reading" slide and to your github repo)
 * create pull-request to master
 * deploy to [Now](https://now.sh)
 
