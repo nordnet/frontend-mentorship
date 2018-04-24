@@ -221,8 +221,6 @@ Greeting.propTypes = {
 ```
 
 
-https://reactjs.org/docs/typechecking-with-proptypes.html
-
 ---
 
 
@@ -241,6 +239,7 @@ Composition won.
 * [Documentation](https://reactjs.org/docs/)
 * [Tutorial](https://reactjs.org/tutorial/tutorial.html)
 * [Create react app](https://github.com/facebook/create-react-app/)
+* [Typechecking With PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
 
 ---
 
@@ -249,12 +248,12 @@ Composition won.
 Simple React App
 
 * Use "create-react-app"
-* commit initial state
+* commit initial state of the repository
 * create branch "feat/basic", work in it
-* Page Component (enforces page layout)
-* Header Component
-* Content Component
-* Footer Component
+* Page Component (enforces page layout, responsive one column)
+* Header Component (Logo, menu of "new", "show" and "submit")
+* Content Component (just highlight and add "content" word in it)
+* Footer Component (always in the bottom, links from "further reading" slide)
 * create pull-request to master
 * deploy to [Now](https://now.sh)
 
