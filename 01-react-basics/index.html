@@ -476,6 +476,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 <span class="hljs-keyword">const</span> element = <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Train name is {trainName}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
 </code></pre>
+<p>hurray</p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-10">
@@ -502,26 +503,40 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   </div>
   <div class="slide hidden -" id="slide-12">
     <section class="slide-content"><h3 id="functional-or-stateless">functional or stateless</h3>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> Button = <span class="hljs-function"><span class="hljs-params">props</span> =&gt;</span> (
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> Button = <span class="hljs-function"><span class="hljs-params">props</span> =&gt;</span> {
   <span class="hljs-keyword">const</span> children = props.children;
   <span class="hljs-keyword">const</span> onClick = props.onClick;
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClick}</span>&gt;</span>
-      { children }
+      {children}
     <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
   )
-)
+}
+
+<span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> alert('hello')}&gt;
+    alert 'hello'
+  <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span>
+);
 </code></pre>
+<p><a href="https://codesandbox.io/s/mm9vqp45nj">https://codesandbox.io/s/mm9vqp45nj</a></p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-13">
     <section class="slide-content"><h3 id="functional-or-stateless-v2">functional or stateless v2</h3>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> Button = <span class="hljs-function">(<span class="hljs-params">{ children, onClick }</span>) =&gt;</span> (
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClick}</span>&gt;</span>
-    { children }
+    {children}
   <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
 )
+
+<span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> alert('hello')}&gt;
+    alert 'hello'
+  <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span>
+);
 </code></pre>
+<p><a href="https://codesandbox.io/s/38qjqwyj86">https://codesandbox.io/s/38qjqwyj86</a></p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-14">
@@ -534,7 +549,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
     <span class="hljs-keyword">this</span>.state = { <span class="hljs-attr">counter</span>: <span class="hljs-number">0</span> }
 
     <span class="hljs-keyword">this</span>.incCounter = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-      <span class="hljs-keyword">this</span>.setState({ <span class="hljs-attr">counter</span>: <span class="hljs-keyword">this</span>.state + <span class="hljs-number">1</span> });
+      <span class="hljs-keyword">this</span>.setState({ <span class="hljs-attr">counter</span>: <span class="hljs-keyword">this</span>.state.counter + <span class="hljs-number">1</span> });
     }
 
   }
@@ -545,14 +560,19 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
-        Number of clicks: { counter }.
+        Number of clicks: {counter}.
         <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{incCounter}</span>&gt;</span> Increment counter <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
     )
   }
 }
+
+<span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ClickCount</span> /&gt;</span>
+);</span>
 </code></pre>
+<p><a href="https://codesandbox.io/s/0o1m35lq3v">https://codesandbox.io/s/0o1m35lq3v</a></p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-15">
@@ -604,7 +624,7 @@ Greeting.propTypes = {
 <li>Page Component (enforces page layout, responsive one column)</li>
 <li>Header Component (Logo, menu of &quot;new&quot;, &quot;show&quot; and &quot;submit&quot;)</li>
 <li>Content Component (just highlight and add &quot;content&quot; word in it)</li>
-<li>Footer Component (always in the bottom, links from &quot;further reading&quot; slide)</li>
+<li>Footer Component (always in the bottom, links from &quot;further reading&quot; slide and to your github repo)</li>
 <li>create pull-request to master</li>
 <li>deploy to <a href="https://now.sh">Now</a></li>
 </ul>
