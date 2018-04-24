@@ -144,6 +144,8 @@ hurray
 
 ### functional or stateless
 
+https://codesandbox.io/s/mm9vqp45nj
+
 ```js
 const Button = props => {
   const children = props.children;
@@ -161,11 +163,12 @@ const App = () => (
   </Button>
 );
 ```
-https://codesandbox.io/s/mm9vqp45nj
 
 ---
 
 ### functional or stateless v2
+
+https://codesandbox.io/s/38qjqwyj86
 
 ```js
 const Button = ({ children, onClick }) => (
@@ -181,46 +184,32 @@ const App = () => (
 );
 ```
 
-https://codesandbox.io/s/38qjqwyj86
-
 ---
 
 ### class-based or stateful
 
+https://codesandbox.io/s/0o1m35lq3v
+
 ```js
 class ClickCount extends React.Component {
-
   constructor(props) {
     super(props);
-
     this.state = { counter: 0 }
-
     this.incCounter = () => {
       this.setState({ counter: this.state.counter + 1 });
     }
-
   }
-
   render() {
-    const counter = this.state.counter;
-    const incCounter = this.incCounter;
-
     return (
       <div>
-        Number of clicks: {counter}.
+        Number of clicks: {this.state.counter}.
         <br />
-        <button onClick={incCounter}> Increment counter </button>
+        <button onClick={this.incCounter}> Increment counter </button>
       </div>
     )
   }
 }
-
-const App = () => (
-  <ClickCount />
-);
 ```
-
-https://codesandbox.io/s/0o1m35lq3v
 
 ---
 
