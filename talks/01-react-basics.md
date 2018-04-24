@@ -26,7 +26,7 @@ title: JavaScript Introduction
 * [es2015/es6 features](https://git.io/es6features)
 * [examples of everything new in ECMAScript 2016, 2017, and 2018](https://medium.freecodecamp.org/here-are-examples-of-everything-new-in-ecmascript-2016-2017-and-2018-d52fa3b5a70e)
 
-but dont worry 🦄
+but dont worry anyway 🦄
 
 ---
 
@@ -202,7 +202,26 @@ class ClickCount extends React.Component {
 
 ### prop-types
 
-TODO
+light type system for components. helps in development, removed in production
+
+```js
+import PropTypes from 'prop-types';
+
+class Greeting extends React.Component {
+  render() {
+    return (
+      <h1>Hello, {this.props.name}</h1>
+    );
+  }
+}
+
+Greeting.propTypes = {
+  name: PropTypes.string
+};
+```
+
+
+https://reactjs.org/docs/typechecking-with-proptypes.html
 
 ---
 
