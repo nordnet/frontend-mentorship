@@ -1,0 +1,41 @@
+.headerContainer {
+  display: flex;
+  background-color: #ff6600;
+  align-items: center;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.brandingContainer {
+  display: flex;
+  align-items: center;
+}
+
+.titleText {
+  margin: 0;
+}
+
+.logo {
+  border: 1px solid white;
+  color: white;
+  height: 25px;
+  width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigation a {
+  font-size: 16px;
+  margin: 8px;
+  color: black;
+  text-decoration: none;
+}
