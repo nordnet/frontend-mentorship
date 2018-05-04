@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>React Basics</title>
+  <title>Routing</title>
   <style type="text/css">
     body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -366,7 +366,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
   <div class="slide" id="slide-1">
     <section class="slide-content"><center>
-  <h1>React Basics</h1>
+  <h1>Routing</h1>
   <br />
   <small>
     <i>In react we trust</i>
@@ -381,246 +381,201 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </center></section>
   </div>
   <div class="slide hidden -" id="slide-2">
-    <section class="slide-content"><h3 id="pre-requisite">pre-requisite</h3>
-<ul>
-<li><a href="/frontend-mentorship/00-js-intro">JavaScript Introduction</a></li>
-<li><a href="https://github.com/getify/You-Dont-Know-JS/">&quot;You dont know JS&quot; book</a></li>
-<li><a href="https://git.io/es6features">es2015/es6 features</a></li>
-<li><a href="https://medium.freecodecamp.org/here-are-examples-of-everything-new-in-ecmascript-2016-2017-and-2018-d52fa3b5a70e">examples of everything new in ECMAScript 2016, 2017, and 2018</a></li>
-</ul>
-<p>but dont worry anyway 🦄</p>
+    <section class="slide-content"><h3 id="routing-in-a-nutshell">Routing in a nutshell</h3>
+<pre><code class="lang-jsx">&lt;a href={url}&gt;link&lt;<span class="hljs-regexp">/a&gt;</span>
+</code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-3">
-    <section class="slide-content"><h3 id="history">History</h3>
-<ul>
-<li>html</li>
-<li>html + css</li>
-<li>DHTML / XMLHttpRequest</li>
-<li>Java / Flash</li>
-<li>JQuery</li>
-<li>Backbone/Ember/Angular/etc</li>
-<li>React</li>
-</ul>
+    <section class="slide-content"><h3 id="react-router-in-a-nutshell">react-router in a nutshell</h3>
+<blockquote>
+<p>Declarative, dynamic routing</p>
+</blockquote>
+<blockquote>
+<p>Everything is a Component</p>
+</blockquote>
 </section>
   </div>
   <div class="slide hidden -" id="slide-4">
-    <section class="slide-content"><h3 id="react">React</h3>
-<ul>
-<li>A JavaScript library for building user interfaces</li>
-<li>predictable user interfaces</li>
-<li>Declarative</li>
-<li>Component-Based</li>
-<li>Learn Once, Write Anywhere</li>
-<li><code>ui = f(state)</code></li>
-</ul>
+    <section class="slide-content"><h3 id="react-router-101">react-router 101</h3>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> { BrowserRouter, Switch, Route, Redirect, Link } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-router-dom'</span>;
+
+<span class="hljs-comment">/*…*/</span>
+
+<span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> (
+  &lt;BrowserRouter&gt;
+
+    &lt;Switch&gt;
+
+      &lt;Route exact path="/" component={Main} /&gt;
+
+      &lt;Route path="/contacts" component={Contacts} /&gt;
+
+      &lt;Route path="/faq" component={Faq} /&gt;
+
+      &lt;Route path="/user/:userId" component={User} /&gt;
+
+      &lt;Redirect from="/old/url" to="/new/url" /&gt;
+
+      &lt;Route component={NotFound} /&gt;
+
+    &lt;/Switch&gt;
+
+  &lt;/BrowserRouter&gt;
+)
+</code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-5">
-    <section class="slide-content"><h3 id="jquery-era">JQuery era</h3>
+    <section class="slide-content"><h3 id="react-router-routers">react-router: Routers</h3>
+<p>keep your UI in sync with the URL via:</p>
 <ul>
-<li>write a form</li>
-<li>add event handlers</li>
-<li>write another form</li>
-<li>add more event handlers</li>
-<li>modify DOM manually all along</li>
-<li>end up in combinatoric explosion of your states and event handlers</li>
-<li>also not testable</li>
+<li><code>StaticRouter</code> never changes location.</li>
+<li><code>HashRouter</code> uses the hash (<code>#</code>) portion of the URL (i.e. window.location.hash). like in good old times.</li>
+<li><code>MemoryRouter</code> keeps the history of your &quot;URL&quot; in memory (does not read or write to the address bar). Useful in tests.</li>
+<li><code>BrowserRouter</code> uses the HTML5 history API (pushState, replaceState and the popstate event). Primary</li>
 </ul>
 </section>
   </div>
   <div class="slide hidden -" id="slide-6">
-    <section class="slide-content"><h3 id="backbone-ember-angular-etc-aka-js-frameworks-era">Backbone/Ember/Angular/etc aka JS frameworks era</h3>
-<ul>
-<li>learn extensive API surface</li>
-<li>pick new framework</li>
-<li>learn extensive API surface again</li>
-<li>barely can use one with another</li>
-<li>learn ad-hoc DSL for HTML DSL</li>
-<li>yet to end up in combinatoric explosion of your states and event handlers</li>
-<li>but in more complex apps</li>
-<li>testable, but ohmy</li>
-</ul>
+    <section class="slide-content"><h3 id="react-context">react context</h3>
+<blockquote>
+<p>Context provides a way to pass data through the component tree without having to pass props down manually at every level.</p>
+</blockquote>
+<blockquote>
+<p>Q: When to Use Context?<br>A: Context is designed to share data that can be considered “global” for a tree of React components, such as the current authenticated user, theme, or preferred language.</p>
+</blockquote>
 </section>
   </div>
   <div class="slide hidden -" id="slide-7">
-    <section class="slide-content"><h3 id="react-era">React era</h3>
-<ul>
-<li>learn <del>extensive</del> small API surface</li>
-<li>learn concept once, write everywhere</li>
-<li>use with frameworks as you wish</li>
-<li><del>learn ad-hoc DSL</del> just learn JS</li>
-<li>care about components—not DOM</li>
-<li>simple and predictable</li>
-<li><del>yet to be</del> testable, as any other JS parts</li>
-<li>paradigm shift, &#39;cause you model your your UI around its state.</li>
-</ul>
+    <section class="slide-content"><h3 id="react-context-tldr-docs-">react context (tldr) (<a href="https://reactjs.org/docs/context.html">docs</a>)</h3>
+<p>never on your own, unless you know what you are doing.</p>
+<p>Rule of thumb: let libraries to deal with it</p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-8">
-    <section class="slide-content"><h3 id="jsx">JSX</h3>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> element = <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, world!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
+    <section class="slide-content"><h3 id="react-router-browserrouter">react-router: BrowserRouter</h3>
+<p>Creates and manages url and helpers for it in a context.</p>
+<p>Passes it down to <code>Switch</code>, <code>Route</code>, <code>Redirect</code> and <code>withRouter</code>.</p>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> { BrowserRouter <span class="hljs-keyword">as</span> Router } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-router-dom'</span>
+
+<span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Router</span>&gt;</span>
+    {/*…*/}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span></span>
+);
 </code></pre>
-<ul>
-<li>neither string nor HTML.</li>
-<li>not yet another Ad Hoc DSL</li>
-<li>isnt required</li>
-<li>doesnt violate <a href="https://en.wikipedia.org/wiki/Separation_of_concerns">&quot;Separation of concerns&quot;</a></li>
-<li>allows to build units of UI—react components</li>
-</ul>
 </section>
   </div>
   <div class="slide hidden -" id="slide-9">
-    <section class="slide-content"><h3 id="interpolation-in-jsx">interpolation in JSX</h3>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> trainName = <span class="hljs-string">'Trainy McTrainface'</span>;
-
-<span class="hljs-keyword">const</span> element = <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Train name is {trainName}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
+    <section class="slide-content"><h3 id="react-router-route-docs-">react-router: Route (<a href="https://reacttraining.com/react-router/web/api/Route">docs</a>)</h3>
+<p>Renders a <code>Component</code> when a react-router&#39;s <code>location</code> matches the route’s path or null otherwise.</p>
+<pre><code class="lang-jsx">&lt;Route exact path=<span class="hljs-string">"/"</span> component={Home}/&gt;
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/news"</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{NewsFeed}/</span>&gt;</span></span>
 </code></pre>
-<p>hurray</p>
+<p>will be rendered one <code>null</code> and either <code>Home</code> or <code>NewsFeed</code> components.</p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-10">
-    <section class="slide-content"><h3 id="react-component">React Component</h3>
+    <section class="slide-content"><h3 id="react-router-route-docs-">react-router: Route (<a href="https://reacttraining.com/react-router/web/api/Route">docs</a>)</h3>
 <ul>
-<li>Either function or class or stateless and stateful, respectively</li>
-<li>Takes in <code>props</code></li>
-<li>functional components can only rely on <code>props</code></li>
-<li>class-based components can have its own state</li>
-<li>class-based components can have life-cycle methods</li>
-<li>special <code>children</code> props to nest components</li>
-<li>returns stuff to render</li>
+<li><code>&lt;Route component={Component} /&gt;</code> — just for a simple component</li>
+<li><code>&lt;Route render={() =&gt; &lt;Component prop={true} /&gt;} /&gt;</code> — for inline rendering</li>
+<li><code>&lt;Route children={} /&gt;</code> — in case if you need to render whether the path matches the location or not.</li>
+</ul>
+<p>All three render methods will be passed the same three route props:</p>
+<ul>
+<li><a href="https://reacttraining.com/web/api/match">match</a></li>
+<li><a href="https://reacttraining.com/react-router/web/api/location">location</a></li>
+<li><a href="https://reacttraining.com/react-router/web/api/history">history</a></li>
 </ul>
 </section>
   </div>
   <div class="slide hidden -" id="slide-11">
-    <section class="slide-content"><h3 id="pure-function">Pure Function</h3>
-<h2 id="-">𝑦﹦𝑓(𝑥)</h2>
-<blockquote>
-<p>A pure function is a function that, given the same input, will always return the same output and does not have any observable side effect.<br>— <a href="https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch3.html#oh-to-be-pure-again">&quot;Mostly adequate guide to FP&quot;</a></p>
-</blockquote>
-<p><em>same input = same output, in short.</em><br><small><em>also, no side effects please</em></small></p>
+    <section class="slide-content"><h3 id="react-router-switch-docs-">react-router: Switch (<a href="https://reacttraining.com/react-router/web/api/Switch">docs</a>)</h3>
+<p>renders a particular route or redirect exclusively.</p>
+<pre><code class="lang-jsx">&lt;Switch&gt;
+  &lt;Route exact path="/" component={Home}/&gt;
+  &lt;Route path="/about" component={About}/&gt;
+  &lt;Route path="/:user" component={User}/&gt;
+  &lt;Route component={NoMatch}/&gt;
+&lt;/Switch&gt;
+</code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-12">
-    <section class="slide-content"><h3 id="functional-or-stateless">functional or stateless</h3>
-<p><a href="https://codesandbox.io/s/mm9vqp45nj">https://codesandbox.io/s/mm9vqp45nj</a></p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> Button = <span class="hljs-function"><span class="hljs-params">props</span> =&gt;</span> {
-  <span class="hljs-keyword">const</span> children = props.children;
-  <span class="hljs-keyword">const</span> onClick = props.onClick;
-  <span class="hljs-keyword">return</span> (
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClick}</span>&gt;</span>
-      {children}
-    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
-  )
-}
-
-<span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> (
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> alert('hello')}&gt;
-    alert 'hello'
-  <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span>
-);
+    <section class="slide-content"><h3 id="react-router-redirect-docs-">react-router: Redirect (<a href="https://reacttraining.com/react-router/web/api/Redirect">docs</a>)</h3>
+<p>if the <code>url</code> matches <code>from</code> prop redirects to <code>to</code> prop;</p>
+<pre><code class="lang-jsx">&lt;Redirect <span class="hljs-keyword">from</span>=<span class="hljs-string">"/old/url"</span> to=<span class="hljs-string">"/new/url"</span> /&gt;
 </code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-13">
-    <section class="slide-content"><h3 id="functional-or-stateless-v2">functional or stateless v2</h3>
-<p><a href="https://codesandbox.io/s/38qjqwyj86">https://codesandbox.io/s/38qjqwyj86</a></p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> Button = <span class="hljs-function">(<span class="hljs-params">{ children, onClick }</span>) =&gt;</span> (
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClick}</span>&gt;</span>
-    {children}
-  <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
-)
-
-<span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> (
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> alert('hello')}&gt;
-    alert 'hello'
-  <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span>
-);
+    <section class="slide-content"><h3 id="react-router-link-docs-and-navlink-docs-">react-router: Link (<a href="https://reacttraining.com/react-router/web/api/Link">docs</a>) and NavLink (<a href="https://reacttraining.com/react-router/web/api/NavLink">docs</a>)</h3>
+<p><code>Link</code> provides declarative, accessible navigation around your application.</p>
+<pre><code class="lang-jsx">&lt;Link to=<span class="hljs-string">"/about"</span>&gt;About&lt;<span class="hljs-regexp">/Link&gt;</span>
+</code></pre>
+<p><code>NavLink</code> is a special version of the <code>Link</code> that will add styling attributes to the rendered element when it matches the current URL</p>
+<pre><code class="lang-jsx">&lt;NavLink to=<span class="hljs-string">"/faq"</span> activeClassName=<span class="hljs-string">"selected"</span>&gt;FAQs&lt;<span class="hljs-regexp">/NavLink&gt;</span>
 </code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-14">
-    <section class="slide-content"><h3 id="class-based-or-stateful">class-based or stateful</h3>
-<p><a href="https://codesandbox.io/s/0o1m35lq3v">https://codesandbox.io/s/0o1m35lq3v</a></p>
-<pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClickCount</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  <span class="hljs-keyword">constructor</span>(props) {
-    <span class="hljs-keyword">super</span>(props);
-    <span class="hljs-keyword">this</span>.state = { <span class="hljs-attr">counter</span>: <span class="hljs-number">0</span> }
-    <span class="hljs-keyword">this</span>.incCounter = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-      <span class="hljs-keyword">this</span>.setState({ <span class="hljs-attr">counter</span>: <span class="hljs-keyword">this</span>.state.counter + <span class="hljs-number">1</span> });
-    }
-  }
-  render() {
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
-        Number of clicks: {this.state.counter}.
-        <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{this.incCounter}</span>&gt;</span> Increment counter <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-    )
-  }
-}
+    <section class="slide-content"><h3 id="react-router-withrouter-hoc-docs-">react-router: <code>withRouter</code> HoC (<a href="https://reacttraining.com/react-router/web/api/withRouter">docs</a>)</h3>
+<blockquote>
+<p>You can get access to the history object’s properties and the closest <Route>&#39;s match via the withRouter higher-order component. <code>withRouter</code> will pass updated <a href="https://reacttraining.com/react-router/web/api/match">match</a>, <a href="https://reacttraining.com/react-router/web/api/location">location</a>, and <a href="https://reacttraining.com/react-router/web/api/history">history</a> props to the wrapped component whenever it renders.</p>
+</blockquote>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> { withRouter } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-router'</span>;
+
+<span class="hljs-keyword">const</span> User = <span class="hljs-function">(<span class="hljs-params">{ location, match, history }</span>) =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    current location: {location.pathname /* '/user/123/' */}
+    <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+    User Id: {match.params.userId /* 123 */}
+    <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> history.goBack()}&gt;go back<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+)
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> withRouter(User);
 </code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-15">
-    <section class="slide-content"><h3 id="prop-types">prop-types</h3>
-<p>light type system for components. helps in development, removed in production</p>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
+    <section class="slide-content"><h3 id="react-router-example">react-router: example</h3>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> { BrowserRouter, Route, Switch } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-router-dom'</span>;
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Greeting</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  render() {
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, {this.props.name}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
-    );
-  }
-}
-
-Greeting.propTypes = {
-  <span class="hljs-attr">name</span>: PropTypes.string
-};
+<span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> (
+  &lt;BrowserRouter&gt;
+    &lt;Switch&gt;
+      &lt;Route exact path="/" component={InstrumentList} /&gt;
+      &lt;Route path="/instruments/:instrumentId" component={instrument} /&gt;
+    &lt;/Switch&gt;
+  &lt;/BrowserRouter&gt;
+)
 </code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-16">
-    <section class="slide-content"><h3 id="composition-vs-inheritance">Composition vs Inheritance</h3>
-<p>Composition won.</p>
+    <section class="slide-content"><h3 id="further-reading">Further reading</h3>
 <ul>
-<li>Containment: <a href="https://codepen.io/gaearon/pen/ozqNOV?editors=0010">via &quot;children&quot;</a> or <a href="https://codepen.io/gaearon/pen/gwZOJp?editors=0010">via &quot;props&quot;</a></li>
-<li>Specialization: <a href="https://codepen.io/gaearon/pen/kkEaOZ?editors=0010">deriving specific purpose component from generic one</a></li>
+<li><a href="https://reacttraining.com/react-router/web/">React-Router documentation</a> (look for the left sidebar)</li>
+<li><a href="https://reactjs.org/docs/hello-world.html">React documentation</a> (look for the right sidebar)</li>
 </ul>
 </section>
   </div>
   <div class="slide hidden -" id="slide-17">
-    <section class="slide-content"><h3 id="further-reading">Further reading</h3>
+    <section class="slide-content"><h3 id="assignment">Assignment</h3>
 <ul>
-<li><a href="https://rauchg.com/2015/pure-ui">&quot;Pure UI&quot;</a></li>
-<li><a href="https://reactjs.org/docs/">Documentation</a></li>
-<li><a href="https://reactjs.org/tutorial/tutorial.html">Tutorial</a></li>
-<li><a href="https://github.com/facebook/create-react-app/">Create react app</a></li>
-<li><a href="https://reactjs.org/docs/typechecking-with-proptypes.html">Typechecking With PropTypes</a></li>
+<li>Route <code>/item/:itemId</code> to render one <code>NewsItem</code> component</li>
+<li>Route <code>/</code> to render <code>NewsItemList</code> Component</li>
+<li>Assignment&#39;s assets <a href="https://gist.github.com/iamstarkov/effaeeb6a9605bd21eb31aca65af65a7">https://gist.github.com/iamstarkov/effaeeb6a9605bd21eb31aca65af65a7</a></li>
 </ul>
 </section>
   </div>
   <div class="slide hidden -" id="slide-18">
-    <section class="slide-content"><h3 id="assignment">Assignment</h3>
-<p>Simple React App</p>
-<ul>
-<li>Use &quot;create-react-app&quot;</li>
-<li>commit initial state of the repository</li>
-<li>create branch &quot;feat/basic&quot;, work in it</li>
-<li>Page Component (enforces page layout, responsive one column)</li>
-<li>Header Component (Logo, menu of &quot;new&quot;, &quot;show&quot; and &quot;submit&quot;)</li>
-<li>Content Component (just highlight and add &quot;content&quot; word in it)</li>
-<li>Footer Component (always in the bottom, links from &quot;further reading&quot; slide and to your github repo)</li>
-<li>create pull-request to master</li>
-<li>deploy to <a href="https://now.sh">Now</a></li>
-</ul>
-</section>
-  </div>
-  <div class="slide hidden -" id="slide-19">
     <section class="slide-content"><center>
-  <h1>React Basics</h1>
+  <h1>Routing</h1>
   <br />
   <small>
     <i>In react we trust</i>
