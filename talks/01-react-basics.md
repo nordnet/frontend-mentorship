@@ -1,4 +1,4 @@
-title: JavaScript Introduction
+title: React Basics
 
 --
 
