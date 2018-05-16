@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "repository": "https://github.com/nordnet/frontend-mentorship",
   "scripts": {
+    "prebuild": "rm -rf build",
     "build": "gulp build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "homepage": "https://nordnet.github.io/frontend-mentorship",
