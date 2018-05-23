@@ -443,10 +443,9 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   </div>
   <div class="slide hidden -" id="slide-8">
     <section class="slide-content"><h3 id="reducers-docs-">reducers (<a href="https://redux.js.org/basics/reducers">docs</a>)</h3>
-<p>Reducers specify how the state changes in response to actions sent to the store.</p>
-<p>OBS: pure function. no mutations, pls.</p>
+<p>Reducers specify how the state changes in response to actions sent to the store.<br>Or<br>Reducers derive new state from the current state and the action.<br>OBS: pure function. no mutations, pls.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// (previousState, action) =&gt; newState</span>
-<span class="hljs-keyword">const</span> itemReducer = (state = {}, action) {
+<span class="hljs-keyword">const</span> itemReducer = <span class="hljs-function">(<span class="hljs-params">state = {}, action</span>) =&gt;</span> {
   <span class="hljs-keyword">switch</span> (action.type) {
     <span class="hljs-keyword">case</span> <span class="hljs-string">'SET_NAME'</span>:
       <span class="hljs-keyword">return</span> { ...state, <span class="hljs-attr">name</span>: action.payload }
@@ -476,6 +475,22 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </section>
   </div>
   <div class="slide hidden -" id="slide-10">
+    <section class="slide-content"><h3 id="action-reducer-">action + reducer = ❤️</h3>
+<p>reducer reacts on <code>action.type</code> and handles <code>action.payload</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mathReducer = <span class="hljs-function">(<span class="hljs-params">state = <span class="hljs-number">0</span>, action</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> { type, payload } = action;
+  <span class="hljs-keyword">switch</span> (type) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'INC'</span>: <span class="hljs-keyword">return</span> state + <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'DEC'</span>: <span class="hljs-keyword">return</span> state - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'MULT'</span>: <span class="hljs-keyword">return</span> state * payload;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'DIV'</span>: <span class="hljs-keyword">return</span> state / payload;
+    <span class="hljs-keyword">default</span>: <span class="hljs-keyword">return</span> state;
+  }
+}
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-11">
     <section class="slide-content"><h3 id="store">store</h3>
 <p>Store brings state, actions and reducers together.</p>
 <ul>
@@ -488,7 +503,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-11">
+  <div class="slide hidden -" id="slide-12">
     <section class="slide-content"><h3 id="data-flow">data flow</h3>
 <ol>
 <li><code>dispatch(action)</code></li>
@@ -499,7 +514,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </ol>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-12">
+  <div class="slide hidden -" id="slide-13">
     <section class="slide-content"><h3 id="further-watching">further watching</h3>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=fU9hR3kiOK0">&quot;Turning the Database Inside Out&quot; talk</a></li>
@@ -513,7 +528,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-13">
+  <div class="slide hidden -" id="slide-14">
     <section class="slide-content"><h3 id="further-reading">further reading</h3>
 <ul>
 <li><a href="https://redux.js.org/">docs</a></li>
@@ -524,7 +539,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-14">
+  <div class="slide hidden -" id="slide-15">
     <section class="slide-content"><center>
   <h1>Redux</h1>
   <br />
