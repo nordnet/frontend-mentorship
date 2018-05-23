@@ -94,13 +94,14 @@ const addTodo = text => {
 
 ### reducers ([docs](https://redux.js.org/basics/reducers))
 
-Reducers specify how the state changes in response to actions sent to the store.
-
+Reducers specify how the state changes in response to actions sent to the store.  
+Or  
+Reducers derive new state from the current state and the action.  
 OBS: pure function. no mutations, pls.
 
 ```js
 // (previousState, action) => newState
-const itemReducer = (state = {}, action) {
+const itemReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SET_NAME':
       return { ...state, name: action.payload }
@@ -129,6 +130,24 @@ const rootReducer = combineReducers({
   ui: uiReducer,
   data: dataReducer,
 });
+```
+
+---
+### action + reducer = ❤️
+
+reducer reacts on `action.type` and handles `action.payload`
+
+```js
+const mathReducer = (state = 0, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case 'INC': return state + 1;
+    case 'DEC': return state - 1;
+    case 'MULT': return state * payload;
+    case 'DIV': return state / payload;
+    default: return state;
+  }
+}
 ```
 
 ---
