@@ -9,7 +9,7 @@ const talks = [
   '01-react-basics',
   '02-routing',
   '03-async',
-  '04-redux.md'
+  '04-redux'
 ];
 
 gulp.task('pretalks', done => {
