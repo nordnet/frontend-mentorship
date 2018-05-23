@@ -34,3 +34,16 @@ Requirements
 TODOs List:
 * convert an `updateValueTo10` action to `updateValue` action creator with payload configured by its argument
 * investigate if you need to change reducer or not, prove your decision
+
+## substate
+
+Requirements
+* initial state is `{ value: 0 }`
+* `store.dispatch(updateValue(10))`
+* state is `{ value: 10 }`
+* `store.dispatch(updateValue(20))`
+* state is `{ value: 20 }`
+
+TODOs List:
+* rename reducer to `valueReducer`
+* use it to derive `rootReducer` with `combineReducers`

@@ -135,7 +135,10 @@ const rootReducer = combineReducers({
 ---
 ### action + reducer = ❤️
 
-reducer reacts on `action.type` and handles `action.payload`
+reducer  
+• reacts on `action.type`  
+• handles `action.payload`
+
 
 ```js
 const mathReducer = (state = 0, action) => {
