@@ -156,15 +156,25 @@ Store brings state, actions and reducers together.
 
 ---
 
+### further watching
+
+* ["Turning the Database Inside Out" talk](https://www.youtube.com/watch?v=fU9hR3kiOK0)
+* ["Inventing on Principle" talk](https://vimeo.com/36579366)
+* ["Developing ClojureScript with Figwheel" talk](https://www.youtube.com/watch?v=j-kj2qwJa_E)
+* ["Redux fundamentals" talk](https://www.youtube.com/watch?v=ewelU8WHXQ4)
+* ["Live React: Hot Reloading with Time Travel" talk at react-europe 2015](https://www.youtube.com/watch?v=xsSnOQynTHs)
+* ["The Redux Journey" talk at react-europe 2016](https://www.youtube.com/watch?v=uvAXVMwHJXU)
+* ["Getting Started with Redux" course](https://egghead.io/courses/getting-started-with-redux)
+* ["Building React Applications with Idiomatic Redux" course](https://egghead.io/courses/building-react-applications-with-idiomatic-redux)
+
+---
+
 ### further reading
 
 * [docs](https://redux.js.org/)
 * Array.{[map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map),[filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter),[reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)}
 * [Object.assign](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 * [`...` aka rest operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
-* ["Getting Started with Redux" course](https://egghead.io/courses/getting-started-with-redux)
-* ["Building React Applications with Idiomatic Redux" course](https://egghead.io/courses/building-react-applications-with-idiomatic-redux)
-* ["redux fundamentals" slides](http://blog.isquaredsoftware.com/presentations/2018-03-redux-fundamentals/)
 * ["Awesome redux" list](https://github.com/xgrommx/awesome-redux)
 
 ---
