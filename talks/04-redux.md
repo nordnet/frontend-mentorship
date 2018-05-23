@@ -64,7 +64,7 @@ also selectors
 
 ### action ([docs](https://redux.js.org/basics/actions))
 
-Action is a payload of information that send data from your application to your store. They are the only source of information for the store. You send them to the store using `store.dispatch()`.
+Action is a payload of information that send data from your application to your store. They are the only source of information for the store. You send them to the store using `store.dispatch()`. Should always have `type` field.
 
 ```js
 {
