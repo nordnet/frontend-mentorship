@@ -1,0 +1,764 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>react-redux</title>
+  <style type="text/css">
+    body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #222;
+  font-size: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  background-color: #f7f7f7;
+}
+
+.slide-content {
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  margin: 80px auto 0 auto;
+  padding: 30px;
+
+  font-weight: 200;
+  font-size: 200%;
+  line-height: 1.375;
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.arrow {
+  width: 0; height: 0;
+  border: 30px solid #333;
+  float: left;
+  margin-right: 30px;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prev {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+
+  border-left-width: 0;
+  border-right-width: 50px;
+}
+
+.next {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+
+  border-left-width: 50px;
+  border-right-width: 0;
+}
+
+.prev:hover {
+  border-right-color: #888;
+  cursor: pointer;
+}
+
+.next:hover {
+  border-left-color: #888;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 300%;
+  line-height: 1.2;
+  text-align: center;
+  margin: 170px 0 0;
+}
+
+h2 {
+  font-size: 100%;
+  line-height: 1.2;
+  margin: 5px 0;
+  text-align: center;
+  font-weight: 200;
+}
+
+h3 {
+  font-size: 140%;
+  line-height: 1.2;
+  border-bottom: 1px solid #aaa;
+  margin: 0;
+  padding-bottom: 15px;
+}
+
+ul {
+  padding: 20px 0 0 60px;
+  font-weight: 200;
+  line-height: 1.375;
+}
+
+.author h1 {
+  font-size: 170%;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.author h3 {
+  font-weight: 100;
+  text-align: center;
+  font-size: 95%;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: #44a4dd;
+}
+
+a:hover {
+  color: #66b5ff;
+}
+
+pre {
+  font-size: 60%;
+  line-height: 1.3;
+}
+
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 1;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 3px;
+  background-color: #b4b4b4;
+
+  -webkit-transition: width 0.05s ease-out;
+  -moz-transition: width 0.05s ease-out;
+  -o-transition: width 0.05s ease-out;
+  transition: width 0.05s ease-out;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 850px) {
+
+  body {
+    font-size: 70%;
+  }
+
+  .slide-content {
+    width: auto;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+
+  .prev, .prev:hover {
+    border-right-color: rgba(135, 135, 135, 0.5);
+  }
+
+  .next, .next:hover {
+    border-left-color: rgba(135, 135, 135, 0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 50%;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    padding: 10px;
+    margin-top: 10px;
+    height: 340px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: letter;
+  }
+
+  .hidden {
+    display: inline;
+  }
+
+  html {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  body {
+    margin: 0 auto !important;
+    border: 0;
+    padding: 0;
+    float: none !important;
+    overflow: visible;
+    background: none !important;
+    font-size: 52%;
+  }
+
+  .progress, .controls {
+    display: none;
+  }
+
+  .slide {
+    position: static;
+  }
+
+  .slide-content {
+    border: 1px solid #222;
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.5in;
+    overflow: visible;
+  }
+
+  .slide:nth-child(even) {
+    /* 2 slides per page */
+    page-break-before: always;
+  }
+}
+
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+
+  </style>
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+  <div class="slide" id="slide-1">
+    <section class="slide-content"><center>
+  <h1>react-redux</h1>
+  <br />
+  <small>
+    <i>In react we trust</i>
+  </small>
+  <br />
+  <br />
+  <small>
+    by <a href="https://iamstarkov.com">Vladimir Starkov</a>
+    <br>
+    frontend engineer at <a href="https://www.nordnet.se/">Nordnet Bank AB</a>
+  </small>
+</center></section>
+  </div>
+  <div class="slide hidden -" id="slide-2">
+    <section class="slide-content"><h3 id="redux">redux</h3>
+<p>Redux is a predictable state container for JavaScript apps</p>
+<p>also is a framework agnostic.</p>
+<p><em>TLDR: Change emitter holding a value</em></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-3">
+    <section class="slide-content"><h3 id="redux-recap">redux recap</h3>
+<ul>
+<li>store <strong>holds and guards</strong> the state</li>
+<li>store offers ways to <strong>access, update and subscribe</strong> to the state</li>
+<li>actions are <strong>update descriptions</strong></li>
+<li>reducers <strong>apply updates</strong></li>
+<li><strong>state is just an object</strong></li>
+<li>next state is derived by applying reducer to an action</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-4">
+    <section class="slide-content"><h3 id="react-redux">react-redux</h3>
+<ul>
+<li><code>Provider</code> makes store available to the App through react&#39;s context</li>
+<li><code>connect</code> connects component to the state allowing to select data from state and to dispatch actions.</li>
+</ul>
+<p>reducers are needed only for creating the store.</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-5">
+    <section class="slide-content"><h3 id="workflow">workflow</h3>
+<ul>
+<li>design state&#39;s shape</li>
+<li>write actions and reducers</li>
+<li>create store with combined reducers</li>
+<li><code>Provide</code> store to the App</li>
+<li><code>connect</code> components to select relevant data and dispatch actions</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-6">
+    <section class="slide-content"><h3 id="hey-what-s-the-">hey, what&#39;s the…</h3>
+<ul>
+<li>action?</li>
+<li>action creator?</li>
+<li>reducer?</li>
+<li><code>combineReducers</code>?</li>
+</ul>
+<p>how do you make reducer react on actions?</p>
+<iframe src="https://www.random.org/widgets/integers/iframe.php?title=True+Random+Number+Generator&amp;buttontxt=Generate&amp;width=160&amp;height=200&amp;border=off&amp;bgcolor=%23FFFFFF&amp;txtcolor=%23777777&amp;altbgcolor=%23CCCCFF&amp;alttxtcolor=%23000000&amp;defaultmin=&amp;defaultmax=&amp;fixed=off" frameborder="0" width="160" height="200" scrolling="no" longdesc="https://www.random.org/integers/">
+The numbers generated by this widget come from RANDOM.ORG&#39;s true random number generator.
+</iframe></section>
+  </div>
+  <div class="slide hidden -" id="slide-7">
+    <section class="slide-content"><h3 id="provider"><a href="https://github.com/reduxjs/react-redux/blob/master/docs/api.md#provider-store">Provider</a></h3>
+<p>Makes the Redux store available to the <code>connect()</code> calls in the component hierarchy below. Normally, you can’t use <code>connect()</code> without wrapping a parent or ancestor component in <code>&lt;Provider&gt;</code>.</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-8">
+    <section class="slide-content"><h3 id="provider"><a href="https://github.com/reduxjs/react-redux/blob/master/docs/api.md#provider-store">Provider</a></h3>
+<pre><code class="lang-js">ReactDOM.render(
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span>,
+  document.getElementById('root')
+);</span>
+</code></pre>
+<p>with react-redux:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> store = createStore(rootReducer);
+
+ReactDOM.render(
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">store</span>=<span class="hljs-string">{store}</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">Provider</span>&gt;</span></span>,
+  <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'root'</span>)
+)
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-9">
+    <section class="slide-content"><h3 id="connect-"><a href="https://github.com/reduxjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options">connect()</a></h3>
+<ul>
+<li>Connects a React component to a Redux store.</li>
+<li>It does not modify the component passed to it; instead, it returns a new, connected component for you to use.</li>
+<li><code>mapStateToProps</code> allows you to select data from state and pass it to component</li>
+<li><code>mapDispatchToProps</code> allows you to dispatch actions to update state.</li>
+<li>updates or re-renders whenever state is updated</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-10">
+    <section class="slide-content"><h3 id="connect-"><a href="https://github.com/reduxjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options">connect()</a></h3>
+<pre><code class="lang-js"><span class="hljs-comment">// State: { clicked: Number }</span>
+<span class="hljs-keyword">const</span> mapStateToProps = <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">clicked</span>: state.clicked }
+};
+<span class="hljs-keyword">const</span> mapDispatchToProps = <span class="hljs-function"><span class="hljs-params">dispatch</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">dispatch</span>: dispatch }
+};
+
+<span class="hljs-keyword">const</span> Counter = <span class="hljs-function"><span class="hljs-params">props</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> { clicked, dispatch } = props;
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      { clicked }
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{e</span> =&gt;</span> dispatch({ type: 'DEC' })}&gt;-<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{e</span> =&gt;</span> dispatch({ type: 'INC' })}&gt;+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  )
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connect(mapStateToProps, mapDispatchToProps)(Counter);
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-11">
+    <section class="slide-content"><h3 id="connect-"><a href="https://github.com/reduxjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options">connect()</a></h3>
+<p><code>mapStateToProps</code> pulls data from state / <code>store.getState()</code></p>
+<p><code>mapDispatchToProps</code>&nbsp;updates¹&nbsp;the&nbsp;state&nbsp;/&nbsp;<code>store.dispatch()</code></p>
+<p><small>[1]: through dispatch and reducers</small></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-12">
+    <section class="slide-content"><h3 id="mapstatetoprops">mapStateToProps</h3>
+<p><em>input:</em> the whole <code>state</code> and <code>ownProps</code> passed to component<br><em>output:</em> <code>stateProps</code>—additional props passed to component on top of its <code>ownProps</code></p>
+<p>just state (80%):</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mapStateToProps = <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">showDetailedGraph</span>: state.ui.showDetailedGraph
+  }
+};
+</code></pre>
+<p>state and props (20%):</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mapStateToProps = <span class="hljs-function">(<span class="hljs-params">state, ownProps</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> allItems = state.data;
+  <span class="hljs-keyword">const</span> id = ownProps.id;
+  <span class="hljs-keyword">const</span> item = allItems[id];
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">item</span>: item
+  }
+};
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-13">
+    <section class="slide-content"><h3 id="mapdispatchtoprops-as-a-na-ve-function-0-">mapDispatchToProps as a naïve function (0%)</h3>
+<p><em>input:</em> <code>store.dispatch</code>, <code>ownProps</code> passed to component<br><em>output:</em> <code>dispatchProps</code>—additional props passed to component on top of its <code>ownProps</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mapDispatchToProps = <span class="hljs-function"><span class="hljs-params">dispatch</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">dispatch</span>: dispatch,
+  }
+};
+</code></pre>
+<p><em>pros:</em> simple, powerful<br><em>cons:</em> component needs to know impl details of actions, TIL: <a href="https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/">The Law of Leaky Abstractions</a></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-14">
+    <section class="slide-content"><h3 id="mapdispatchtoprops-as-a-better-function-20-">mapDispatchToProps as a better function (20%)</h3>
+<p><em>input:</em> <code>store.dispatch</code>, <code>ownProps</code> passed to component<br><em>output:</em> <code>dispatchProps</code>—additional props passed to component on top of its <code>ownProps</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> addTodo = <span class="hljs-function"><span class="hljs-params">text</span> =&gt;</span> ({ <span class="hljs-attr">type</span>: <span class="hljs-string">'ADD_TODO'</span>, <span class="hljs-attr">payload</span>: text });
+<span class="hljs-keyword">const</span> toggleTodo = <span class="hljs-function"><span class="hljs-params">id</span> =&gt;</span> ({ <span class="hljs-attr">type</span>: <span class="hljs-string">'TOGGLE_TODO'</span>, <span class="hljs-attr">payload</span>: id });
+
+<span class="hljs-keyword">const</span> mapDispatchToProps = <span class="hljs-function"><span class="hljs-params">dispatch</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">addTodo</span>: <span class="hljs-function"><span class="hljs-params">text</span> =&gt;</span> dispatch(addTodo(text)),
+    <span class="hljs-attr">toggleTodo</span>: <span class="hljs-function"><span class="hljs-params">text</span> =&gt;</span> dispatch(toggleTodo(text)),
+  }
+};
+</code></pre>
+<p><em>pros:</em> powerful, doesnt leak<br><em>cons:</em> complex and cumbersome</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-15">
+    <section class="slide-content"><h3 id="mapdispatchtoprops-as-an-object-80-">mapDispatchToProps as an object (80%)</h3>
+<p><em><del>input, output:</del></em> its not a function, just a plain js object</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> addTodo = <span class="hljs-function"><span class="hljs-params">text</span> =&gt;</span> ({ <span class="hljs-attr">type</span>: <span class="hljs-string">'ADD_TODO'</span>, <span class="hljs-attr">payload</span>: text });
+<span class="hljs-keyword">const</span> toggleTodo = <span class="hljs-function"><span class="hljs-params">id</span> =&gt;</span> ({ <span class="hljs-attr">type</span>: <span class="hljs-string">'TOGGLE_TODO'</span>, <span class="hljs-attr">payload</span>: id });
+
+<span class="hljs-keyword">const</span> mapDispatchToProps = {
+    addTodo,
+    toggleTodo,
+}
+</code></pre>
+<p><em>pros:</em> powerful, simple, doesnt leak<br><em>cons:</em> doesnt have access to <code>ownProps</code></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-16">
+    <section class="slide-content"><h3 id="react-redux-recap">react-redux recap</h3>
+<ul>
+<li>you still write actions, reducers and <code>createStore</code> outside of the app.</li>
+<li>you make <code>store</code> accessible for the whole App with <code>Provider</code></li>
+<li>you <code>connect</code> to store and<ul>
+<li><code>mapStateToProps</code> to access data from the state</li>
+<li><code>mapDispatchToProps</code> to update<sup>＊</sup> state</li>
+</ul>
+</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-17">
+    <section class="slide-content"><h3 id="further-reading">further reading</h3>
+<ul>
+<li><a href="https://github.com/reduxjs/react-redux/blob/master/docs/api.md#api">API docs</a></li>
+<li><a href="https://github.com/xgrommx/awesome-redux">&quot;awesome-redux&quot; list</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-18">
+    <section class="slide-content"><center>
+  <h1>react-redux</h1>
+  <br />
+  <small>
+    <i>In react we trust</i>
+  </small>
+  <br />
+  <br />
+  <small>
+    by <a href="https://iamstarkov.com">Vladimir Starkov</a>
+    <br>
+    frontend engineer at <a href="https://www.nordnet.se/">Nordnet Bank AB</a>
+  </small>
+</center></section>
+  </div>
+
+  <div class="controls">
+    <div class="arrow prev"></div>
+    <div class="arrow next"></div>
+  </div>
+
+
+  <script type="text/javascript">
+    /**
+ * Returns the current page number of the presentation.
+ */
+function currentPosition() {
+  return parseInt(document.querySelector('.slide:not(.hidden)').id.slice(6));
+}
+
+
+/**
+ * Navigates forward n pages
+ * If n is negative, we will navigate in reverse
+ */
+function navigate(n) {
+  var position = currentPosition();
+  var numSlides = document.getElementsByClassName('slide').length;
+
+  /* Positions are 1-indexed, so we need to add and subtract 1 */
+  var nextPosition = (position - 1 + n) % numSlides + 1;
+
+  /* Normalize nextPosition in-case of a negative modulo result */
+  nextPosition = (nextPosition - 1 + numSlides) % numSlides + 1;
+
+  document.getElementById('slide-' + position).classList.add('hidden');
+  document.getElementById('slide-' + nextPosition).classList.remove('hidden');
+
+  updateProgress();
+  updateURL();
+  updateTabIndex();
+}
+
+
+/**
+ * Updates the current URL to include a hashtag of the current page number.
+ */
+function updateURL() {
+  try {
+    window.history.replaceState({} , null, '#' + currentPosition());
+  } catch (e) {
+    window.location.hash = currentPosition();
+  }
+}
+
+
+/**
+ * Sets the progress indicator.
+ */
+function updateProgress() {
+  var progressBar = document.querySelector('.progress-bar');
+
+  if (progressBar !== null) {
+    var numSlides = document.getElementsByClassName('slide').length;
+    var position = currentPosition() - 1;
+    var percent = (numSlides === 1) ? 100 : 100 * position / (numSlides - 1);
+    progressBar.style.width = percent.toString() + '%';
+  }
+}
+
+
+/**
+ * Removes tabindex property from all links on the current slide, sets
+ * tabindex = -1 for all links on other slides. Prevents slides from appearing
+ * out of control.
+ */
+function updateTabIndex() {
+  var allLinks = document.querySelectorAll('.slide a');
+  var position = currentPosition();
+  var currentPageLinks = document.getElementById('slide-' + position).querySelectorAll('a');
+  var i;
+
+  for (i = 0; i < allLinks.length; i++) {
+    allLinks[i].setAttribute('tabindex', -1);
+  }
+
+  for (i = 0; i < currentPageLinks.length; i++) {
+    currentPageLinks[i].removeAttribute('tabindex');
+  }
+}
+
+/**
+ * Determines whether or not we are currently in full screen mode
+ */
+function isFullScreen() {
+  return document.fullscreenElement ||
+         document.mozFullScreenElement ||
+         document.webkitFullscreenElement ||
+         document.msFullscreenElement;
+}
+
+/**
+ * Toggle fullScreen mode on document element.
+ * Works on chrome (>= 15), firefox (>= 9), ie (>= 11), opera(>= 12.1), safari (>= 5).
+ */
+function toggleFullScreen() {
+  /* Convenient renames */
+  var docElem = document.documentElement;
+  var doc = document;
+
+  docElem.requestFullscreen =
+      docElem.requestFullscreen ||
+      docElem.msRequestFullscreen ||
+      docElem.mozRequestFullScreen ||
+      docElem.webkitRequestFullscreen.bind(docElem, Element.ALLOW_KEYBOARD_INPUT);
+
+  doc.exitFullscreen =
+      doc.exitFullscreen ||
+      doc.msExitFullscreen ||
+      doc.mozCancelFullScreen ||
+      doc.webkitExitFullscreen;
+
+  isFullScreen() ? doc.exitFullscreen() : docElem.requestFullscreen();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Update the tabindex to prevent weird slide transitioning
+  updateTabIndex();
+
+  // If the location hash specifies a page number, go to it.
+  var page = window.location.hash.slice(1);
+  if (page) {
+    navigate(parseInt(page) - 1);
+  }
+
+  document.onkeydown = function (e) {
+    var kc = e.keyCode;
+
+    // left, down, H, J, backspace, PgUp - BACK
+    // up, right, K, L, space, PgDn - FORWARD
+    // enter - FULLSCREEN
+    if (kc === 37 || kc === 40 || kc === 8 || kc === 72 || kc === 74 || kc === 33) {
+      navigate(-1);
+    } else if (kc === 38 || kc === 39 || kc === 32 || kc === 75 || kc === 76 || kc === 34) {
+      navigate(1);
+    } else if (kc === 13) {
+      toggleFullScreen();
+    }
+  };
+
+  if (document.querySelector('.next') && document.querySelector('.prev')) {
+    document.querySelector('.next').onclick = function (e) {
+      e.preventDefault();
+      navigate(1);
+    };
+
+    document.querySelector('.prev').onclick = function (e) {
+      e.preventDefault();
+      navigate(-1);
+    };
+  }
+});
+
+
+  </script>
+</body>
+</html>
