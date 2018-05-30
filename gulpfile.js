@@ -9,7 +9,7 @@ const talks = [
   '01-react-basics',
   '02-routing',
   '03-async',
-  '04-redux'
+  '04-redux',
   '05-react-redux'
 ];
 
