@@ -238,10 +238,9 @@ export const actions = {
 
 ```js
 export const rawReducer = (state = defaultState, action) => {
-  const { type, payload } = action;
-  switch (type) {
+  switch (action.type) {
     case types.updateLang:
-      return { ...state, lang: payload };
+      return { ...state, lang: action.payload };
     default:
       return state;
   }
@@ -379,9 +378,9 @@ ExampleDashboard.propTypes = {
   lang: ducks.ui.shape.lang,
 };
 
-const mapStateToProps = state => ({ lang: ducks.ui.lang(state) });
+const mapStateToProps = state => ({ lang: ducks.ui.selectors.lang(state) });
 
-const mapDispatchToProps = { updateLang: ducks.ui.updateLang };
+const mapDispatchToProps = { updateLang: ducks.ui.actions.updateLang };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExampleDashboard);
 ```
