@@ -752,8 +752,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExampleDashboard);
   <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> selector(rootSelector(state));
 }
 
-<span class="hljs-keyword">const</span> augmentSelectorsReducerFactory = <span class="hljs-function"><span class="hljs-params">selectorsObj</span> =&gt;</span> (state, item) =&gt; {
-  <span class="hljs-keyword">const</span> selectorName = item;
+<span class="hljs-keyword">const</span> augmentSelectorsReducerFactory = <span class="hljs-function">(<span class="hljs-params">rootSelector, ns, selectorsObj</span>) =&gt;</span> (state, item) =&gt; {
+  <span class="hljs-keyword">const</span> selectorName = item === <span class="hljs-string">'root'</span> ? <span class="hljs-string">`<span class="hljs-subst">${ns}</span><span class="hljs-subst">${item}</span>`</span> : item;
   <span class="hljs-keyword">const</span> selector = selectorsObj[selectorName];
   <span class="hljs-keyword">return</span> {
     ...state,
@@ -761,9 +761,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExampleDashboard);
   }
 };
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> augmentSelectors = <span class="hljs-function">(<span class="hljs-params">rootSelector, selectorsObj</span>) =&gt;</span> {
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> augmentSelectors = <span class="hljs-function">(<span class="hljs-params">rootSelector, ns, selectorsObj</span>) =&gt;</span> {
   <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(selectorsObj).reduce(
-    augmentSelectorsReducerFactory(selectorsObj),
+    augmentSelectorsReducerFactory(rootSelector, ns, selectorsObj),
     {}
   );
 }
@@ -790,8 +790,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExampleDashboard);
 <span class="hljs-keyword">const</span> root = <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state[ns];
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> selectors = {
   root,
-  ...augmentSelectors(root, subduck1),
-  ...augmentSelectors(root, subduck2),
+  ...augmentSelectors(root, subduck1.ns, subduck1.actions),
+  ...augmentSelectors(root, subduck1.ns, subduck2.actions),
 }
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> actions = mergeObjects([subduck1.actions, subduck2.actions]);
