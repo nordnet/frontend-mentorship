@@ -570,10 +570,9 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   <div class="slide hidden -" id="slide-16">
     <section class="slide-content"><h3 id="duck-reducer">duck: reducer</h3>
 <pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> rawReducer = <span class="hljs-function">(<span class="hljs-params">state = defaultState, action</span>) =&gt;</span> {
-  <span class="hljs-keyword">const</span> { type, payload } = action;
-  <span class="hljs-keyword">switch</span> (type) {
+  <span class="hljs-keyword">switch</span> (action.type) {
     <span class="hljs-keyword">case</span> types.updateLang:
-      <span class="hljs-keyword">return</span> { ...state, <span class="hljs-attr">lang</span>: payload };
+      <span class="hljs-keyword">return</span> { ...state, <span class="hljs-attr">lang</span>: action.payload };
     <span class="hljs-keyword">default</span>:
       <span class="hljs-keyword">return</span> state;
   }
@@ -701,9 +700,9 @@ ExampleDashboard.propTypes = {
   lang: ducks.ui.shape.lang,
 };
 
-const mapStateToProps = state =&gt; ({ lang: ducks.ui.lang(state) });
+const mapStateToProps = state =&gt; ({ lang: ducks.ui.selectors.lang(state) });
 
-const mapDispatchToProps = { updateLang: ducks.ui.updateLang };
+const mapDispatchToProps = { updateLang: ducks.ui.actions.updateLang };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExampleDashboard);
 </code></pre>
