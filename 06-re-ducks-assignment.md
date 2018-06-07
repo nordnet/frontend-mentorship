@@ -34,6 +34,7 @@
 * [define its shape with prop-types](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#11)
 * [define defaultState](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#12)
 * [add selectors for `isDarkTheme` and `itemsToShow`](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#13)
+* checkpoint
 * [add two action types](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#14)
 * [add two action creators](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#15)
 * [add reducer to handle both action types](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#16)
