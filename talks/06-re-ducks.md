@@ -56,9 +56,10 @@ Redux is a predictable state container for JavaScript apps
 
 ### reasoning
 
-* separation of concerns vs separation of tech
+* doesn scale
 * easier to reason about (read, understand and test)
 * implementation details doesnt leak
+* separation of concerns vs separation of tech
 
 ---
 
@@ -435,8 +436,8 @@ const augmentSelector = (rootSelector, selector) => {
   return state => selector(rootSelector(state));
 }
 
-const augmentSelectorsReducerFactory = selectorsObj => (state, item) => {
-  const selectorName = item;
+const augmentSelectorsReducerFactory = (rootSelector, ns, selectorsObj) => (state, item) => {
+  const selectorName = item === 'root' ? `${ns}${item}` : item;
   const selector = selectorsObj[selectorName];
   return {
     ...state,
@@ -444,9 +445,9 @@ const augmentSelectorsReducerFactory = selectorsObj => (state, item) => {
   }
 };
 
-export const augmentSelectors = (rootSelector, selectorsObj) => {
+export const augmentSelectors = (rootSelector, ns, selectorsObj) => {
   return Object.keys(selectorsObj).reduce(
-    augmentSelectorsReducerFactory(selectorsObj),
+    augmentSelectorsReducerFactory(rootSelector, ns, selectorsObj),
     {}
   );
 }
@@ -475,8 +476,8 @@ export const defaultState = mergeObjects([ subduck1.defaultState, subduck2.defau
 const root = state => state[ns];
 export const selectors = {
   root,
-  ...augmentSelectors(root, subduck1),
-  ...augmentSelectors(root, subduck2),
+  ...augmentSelectors(root, subduck1.ns, subduck1.actions),
+  ...augmentSelectors(root, subduck1.ns, subduck2.actions),
 }
 
 export const actions = mergeObjects([subduck1.actions, subduck2.actions]);
