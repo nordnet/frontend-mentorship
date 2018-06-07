@@ -26,7 +26,7 @@
 ## 1. ui duck
 
 * create file `src/ducks/index.js`
-* add there `import * as ui from './ui';`
+* add there `export * as ui from './ui';`
 * create file `src/ducks/ui/index.js`
 * [start with namespace `ui-duck` (we will  rename it later)](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#10)
 * [define its shape with prop-types](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#11)
