@@ -1,9 +1,6 @@
 # re-ducks assignment
 
 * slides https://nordnet.github.io/frontend-mentorship/06-re-ducks/
-* prepare simplistic state for HN app
-* integrate redux into HN app with react-redux
-
 
 ## what we have
 
