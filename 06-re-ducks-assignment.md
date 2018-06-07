@@ -20,6 +20,7 @@
     items.js
     itemsIds.js
     index.js
+  index.js
 ```
 
 ## 1. ui duck
