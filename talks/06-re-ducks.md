@@ -238,8 +238,8 @@ export const actions = {
 
 ```js
 export const rawReducer = (state = defaultState, action) => {
-  const { type, payload };
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case types.updateLang:
       return { ...state, lang: payload };
     default:
