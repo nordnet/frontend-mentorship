@@ -1,0 +1,1019 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>re-ducks</title>
+  <style type="text/css">
+    body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #222;
+  font-size: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  background-color: #f7f7f7;
+}
+
+.slide-content {
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  margin: 80px auto 0 auto;
+  padding: 30px;
+
+  font-weight: 200;
+  font-size: 200%;
+  line-height: 1.375;
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.arrow {
+  width: 0; height: 0;
+  border: 30px solid #333;
+  float: left;
+  margin-right: 30px;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prev {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+
+  border-left-width: 0;
+  border-right-width: 50px;
+}
+
+.next {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+
+  border-left-width: 50px;
+  border-right-width: 0;
+}
+
+.prev:hover {
+  border-right-color: #888;
+  cursor: pointer;
+}
+
+.next:hover {
+  border-left-color: #888;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 300%;
+  line-height: 1.2;
+  text-align: center;
+  margin: 170px 0 0;
+}
+
+h2 {
+  font-size: 100%;
+  line-height: 1.2;
+  margin: 5px 0;
+  text-align: center;
+  font-weight: 200;
+}
+
+h3 {
+  font-size: 140%;
+  line-height: 1.2;
+  border-bottom: 1px solid #aaa;
+  margin: 0;
+  padding-bottom: 15px;
+}
+
+ul {
+  padding: 20px 0 0 60px;
+  font-weight: 200;
+  line-height: 1.375;
+}
+
+.author h1 {
+  font-size: 170%;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.author h3 {
+  font-weight: 100;
+  text-align: center;
+  font-size: 95%;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: #44a4dd;
+}
+
+a:hover {
+  color: #66b5ff;
+}
+
+pre {
+  font-size: 60%;
+  line-height: 1.3;
+}
+
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 1;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 3px;
+  background-color: #b4b4b4;
+
+  -webkit-transition: width 0.05s ease-out;
+  -moz-transition: width 0.05s ease-out;
+  -o-transition: width 0.05s ease-out;
+  transition: width 0.05s ease-out;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 850px) {
+
+  body {
+    font-size: 70%;
+  }
+
+  .slide-content {
+    width: auto;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+
+  .prev, .prev:hover {
+    border-right-color: rgba(135, 135, 135, 0.5);
+  }
+
+  .next, .next:hover {
+    border-left-color: rgba(135, 135, 135, 0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 50%;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    padding: 10px;
+    margin-top: 10px;
+    height: 340px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: letter;
+  }
+
+  .hidden {
+    display: inline;
+  }
+
+  html {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  body {
+    margin: 0 auto !important;
+    border: 0;
+    padding: 0;
+    float: none !important;
+    overflow: visible;
+    background: none !important;
+    font-size: 52%;
+  }
+
+  .progress, .controls {
+    display: none;
+  }
+
+  .slide {
+    position: static;
+  }
+
+  .slide-content {
+    border: 1px solid #222;
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.5in;
+    overflow: visible;
+  }
+
+  .slide:nth-child(even) {
+    /* 2 slides per page */
+    page-break-before: always;
+  }
+}
+
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+
+  </style>
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+  <div class="slide" id="slide-1">
+    <section class="slide-content"><center>
+  <h1>re-ducks</h1>
+  <br />
+  <small>
+    <i>In react we trust</i>
+  </small>
+  <br />
+  <br />
+  <small>
+    by <a href="https://iamstarkov.com">Vladimir Starkov</a>
+    <br>
+    frontend engineer at <a href="https://www.nordnet.se/">Nordnet Bank AB</a>
+  </small>
+</center></section>
+  </div>
+  <div class="slide hidden -" id="slide-2">
+    <section class="slide-content"><h3 id="redux-recap">redux recap</h3>
+<p>Redux is a predictable state container for JavaScript apps</p>
+<ul>
+<li>store <strong>holds and guards</strong> the state</li>
+<li>store offers ways to <strong>access, update and subscribe</strong> to the state</li>
+<li>actions are <strong>update descriptions</strong></li>
+<li>reducers <strong>apply updates</strong></li>
+<li><strong>state is just an object</strong></li>
+<li>next state is derived by applying reducer to an action</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-3">
+    <section class="slide-content"><p><img src="https://i.imgur.com/Q5HhrcQ.jpg" style="max-width: 100%" /></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-4">
+    <section class="slide-content"><h3 id="ducks">ducks</h3>
+<ul>
+<li>approach to modularize redux related code</li>
+<li>self contained redux entity</li>
+<li>responsible for its particular part of the state (substate):<ul>
+<li>namespace — key of that substate</li>
+<li>actions and action creators — declaring updates</li>
+<li>reducers — applying updates</li>
+<li>selectors — retrieving data from state</li>
+</ul>
+</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-5">
+    <section class="slide-content"><h3 id="reasoning">reasoning</h3>
+<p><img src="https://i.imgur.com/UDctqcW.jpg" style="max-width: 100%" /></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-6">
+    <section class="slide-content"><h3 id="reasoning">reasoning</h3>
+<ul>
+<li>separation of concerns vs separation of tech</li>
+<li>easier to reason about (read, understand and test)</li>
+<li>implementation details doesnt leak</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-7">
+    <section class="slide-content"><h3 id="components-example">components example</h3>
+<p>before</p>
+<pre><code>./src/
+  css/
+    example-component.css
+  html/
+    example-component.html
+  js/
+    example-component.js
+</code></pre><p>after:</p>
+<pre><code>./src/components/
+  example-component/
+    index.js
+    example-component.js (html+js)
+    example-component.css (css)
+  index.js (re-export entry point)
+</code></pre></section>
+  </div>
+  <div class="slide hidden -" id="slide-8">
+    <section class="slide-content"><h3 id="redux-before-ducks">redux before ducks</h3>
+<pre><code>./src/
+  action-types/
+    example-action-types.js
+  reducers/
+    example-reducers.js
+  actions/
+    example-actions.js
+</code></pre></section>
+  </div>
+  <div class="slide hidden -" id="slide-9">
+    <section class="slide-content"><h3 id="redux-after-ducks">redux after ducks</h3>
+<p>after:</p>
+<pre><code>./src/ducks/
+  example-duck/
+    index.js
+    action-types.js
+    reducer.js
+    actions.js
+  index.js (re-export entry point)
+</code></pre></section>
+  </div>
+  <div class="slide hidden -" id="slide-10">
+    <section class="slide-content"><h3 id="duck-namespace">duck: namespace</h3>
+<p>key of the substate it handles</p>
+<pre><code class="lang-js">{
+  <span class="hljs-attr">ui</span>: {},
+  <span class="hljs-attr">data</span>: {},
+  [namespace]: {},
+}
+
+<span class="hljs-comment">// example duck, ns is short for namespace</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ns = <span class="hljs-string">'ui'</span>;
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-11">
+    <section class="slide-content"><h3 id="duck-shape">duck: shape</h3>
+<p><a href="https://reactjs.org/docs/typechecking-with-proptypes.html">prop types</a> of the values of the substate</p>
+<pre><code class="lang-js">{
+  <span class="hljs-attr">ui</span>: {
+    <span class="hljs-attr">lang</span>: <span class="hljs-string">'sv'</span>,
+  },
+  <span class="hljs-comment">// …</span>
+}
+
+<span class="hljs-comment">// example duck's default state</span>
+<span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> shape = {
+  <span class="hljs-attr">lang</span>: PropTypes.string.isRequired,
+};
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-12">
+    <section class="slide-content"><h3 id="duck-default-state">duck: default state</h3>
+<p>default state to be used in reducer as it is</p>
+<pre><code class="lang-js">{
+  <span class="hljs-attr">ui</span>: {
+    <span class="hljs-attr">lang</span>: <span class="hljs-string">'sv'</span>,
+  },
+}
+
+<span class="hljs-comment">// example duck's default state</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> defaultState = {
+  <span class="hljs-attr">lang</span>: <span class="hljs-string">'sv'</span>,
+};
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-13">
+    <section class="slide-content"><h3 id="duck-selectors">duck: selectors</h3>
+<p>gives access to the data inside of the ducks. decouple components from state&#39;s shape</p>
+<p>be careful with a scope/namespace</p>
+<pre><code class="lang-js">{
+  <span class="hljs-attr">ui</span>: {
+    <span class="hljs-attr">lang</span>: <span class="hljs-string">'sv'</span>,
+  },
+  <span class="hljs-comment">// …</span>
+}
+
+<span class="hljs-comment">//    root = state =&gt; state.ui;</span>
+<span class="hljs-comment">//    root = state =&gt; state['ui'];</span>
+<span class="hljs-keyword">const</span> root = <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state[ns];
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> selectors = {
+  root,
+  <span class="hljs-attr">lang</span>: <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> root(state).lang,
+}
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-14">
+    <section class="slide-content"><h3 id="duck-action-types">duck: action types</h3>
+<p>actions types to be shared between actions and reducers. it is usually good idea to namespace them as well</p>
+<pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> updateLang = <span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> ({
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"UPDATE_LANG"</span>,
+  <span class="hljs-attr">payload</span>: value
+});
+
+<span class="hljs-comment">// example duck's types</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> types = {
+  <span class="hljs-attr">updateLang</span>: <span class="hljs-string">`<span class="hljs-subst">${ns}</span> / UPDATE_LANG`</span>,
+};
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-15">
+    <section class="slide-content"><h3 id="duck-actions-and-action-creators">duck: actions and action creators</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> updateLang = <span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> ({
+  <span class="hljs-attr">type</span>: types.updateLang,
+  <span class="hljs-attr">payload</span>: value
+});
+
+<span class="hljs-comment">// example duck's types</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> actions = {
+  updateLang,
+};
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-16">
+    <section class="slide-content"><h3 id="duck-reducer">duck: reducer</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> rawReducer = <span class="hljs-function">(<span class="hljs-params">state = defaultState, action</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> { type, payload };
+  <span class="hljs-keyword">switch</span> (action.type) {
+    <span class="hljs-keyword">case</span> types.updateLang:
+      <span class="hljs-keyword">return</span> { ...state, <span class="hljs-attr">lang</span>: payload };
+    <span class="hljs-keyword">default</span>:
+      <span class="hljs-keyword">return</span> state;
+  }
+}
+
+<span class="hljs-comment">// its a good idea to namespace reducer as well</span>
+<span class="hljs-keyword">export</span> reducer = {
+  [ns]: rawReducer,
+}
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-17">
+    <section class="slide-content"><h3 id="duck-ui-example-part-1-">duck: ui example (part 1)</h3>
+<pre><code class="lang-js"><span class="hljs-comment">// src/ducks/ui/index.js</span>
+<span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ns = <span class="hljs-string">'ui'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> shape = {
+  <span class="hljs-attr">lang</span>: PropTypes.string.isRequired,
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> defaultState = {
+  <span class="hljs-attr">lang</span>: <span class="hljs-string">'sv'</span>,
+};
+
+<span class="hljs-keyword">const</span> root = <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state[ns];
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> selectors = {
+  root,
+  <span class="hljs-attr">lang</span>: <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> root(state).lang,
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> types = {
+  <span class="hljs-attr">updateLang</span>: <span class="hljs-string">`<span class="hljs-subst">${ns}</span> / UPDATE_LANG`</span>,
+};
+
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-18">
+    <section class="slide-content"><h3 id="duck-ui-example-part-2-">duck: ui example (part 2)</h3>
+<pre><code class="lang-js"><span class="hljs-comment">// src/ducks/ui/index.js</span>
+<span class="hljs-keyword">const</span> updateLang = <span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> ({
+  <span class="hljs-attr">type</span>: types.updateLang,
+  <span class="hljs-attr">payload</span>: value
+});
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> actions = {
+  updateLang,
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> rawReducer = <span class="hljs-function">(<span class="hljs-params">state = defaultState, action</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> { type, payload };
+  <span class="hljs-keyword">switch</span> (action.type) {
+    <span class="hljs-keyword">case</span> types.updateLang:
+      <span class="hljs-keyword">return</span> { ...state, <span class="hljs-attr">lang</span>: payload };
+    <span class="hljs-keyword">default</span>:
+      <span class="hljs-keyword">return</span> state;
+  }
+}
+
+<span class="hljs-keyword">export</span> reducer = {
+  [ns]: rawReducer,
+}
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-19">
+    <section class="slide-content"><h3 id="ducks-re-export-entry-point">ducks: re-export entry point</h3>
+<pre><code class="lang-js"><span class="hljs-comment">// src/ducks/index.js</span>
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> ui <span class="hljs-keyword">from</span> <span class="hljs-string">'./ui'</span>;
+<span class="hljs-comment">// import * as example from './example';</span>
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-20">
+    <section class="slide-content"><h3 id="ducks-creating-store">ducks: creating store</h3>
+<pre><code class="lang-js"><span class="hljs-comment">// src/index.js</span>
+<span class="hljs-keyword">import</span> { combineReducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> ducks <span class="hljs-keyword">from</span> <span class="hljs-string">'./ducks'</span>;
+
+<span class="hljs-keyword">const</span> rootReducer = combineReducers({
+  ...ducks.ui.reducer, <span class="hljs-comment">// { ui: ui.rawReducer }</span>
+  ...ducks.example.reducer, <span class="hljs-comment">// { example: example.rawReducer }</span>
+}); <span class="hljs-comment">// combineReducers({ ui: ui.rawReducer, example: example.rawReducer })</span>
+
+<span class="hljs-keyword">const</span> store = createStore(
+  rootReducer,
+  compose(
+    applyMiddleware(thunk),
+    <span class="hljs-built_in">window</span>.__REDUX_DEVTOOLS_EXTENSION__ &amp;&amp; <span class="hljs-built_in">window</span>.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+);
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-21">
+    <section class="slide-content"><h3 id="ducks-how-to-use">ducks: how to use</h3>
+<p><img src="https://i.imgur.com/GnvYdS6.jpg" style="min-width: 100%" /></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-22">
+    <section class="slide-content"><pre><code class="lang-js">// src/example-dashboard/index.js
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import * as ducks from '../ducks'
+
+const ExampleDashboard = props =&gt; {
+  const { updateLang, lang } = props;
+
+  return {
+    &lt;div&gt;
+      &lt;button onClick={e =&gt; { updateLang('sv') }}&gt; Change lang to "sv" &lt;/button&gt;
+      &lt;button onClick={e =&gt; { updateLang('en') }}&gt; Change lang to "en" &lt;/button&gt;
+      &lt;div&gt;
+        Current language: {lang}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  }
+}
+
+ExampleDashboard.propTypes = {
+  updateLang: PropTypes.func.isRequired,
+  lang: ducks.ui.shape.lang,
+};
+
+const mapStateToProps = state =&gt; ({ lang: ducks.ui.lang(state) });
+
+const mapDispatchToProps = { updateLang: ducks.ui.updateLang };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExampleDashboard);
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-23">
+    <section class="slide-content"><h3 id="nested-ducks">nested ducks</h3>
+<p>keep state flat as possible</p>
+<p>no more than two level of nestedness</p>
+<pre><code class="lang-js">{
+  <span class="hljs-attr">firstLevel1</span>: <span class="hljs-comment">/* duck1 */</span>, <span class="hljs-comment">// OK</span>
+  firstLevel2: {
+    <span class="hljs-attr">secondLevel1</span>: <span class="hljs-comment">/* duck2's subduck1 */</span>, <span class="hljs-comment">// OK</span>
+    secondLevel2: <span class="hljs-comment">/* duck2's subduck2 */</span>, <span class="hljs-comment">// OK</span>
+    secondLevel3: {
+      <span class="hljs-attr">thirdLevel1</span>: <span class="hljs-comment">/* duck2's subduck1's subduck1 */</span>, <span class="hljs-comment">// NOT OK</span>
+    },
+  }
+}
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-24">
+    <section class="slide-content"><h3 id="nested-ducks">nested ducks</h3>
+<ul>
+<li>common namespace</li>
+<li>shapes — merged</li>
+<li>default states — merged</li>
+<li>selectors — augmented with nested duck&#39;s root selector</li>
+<li>actions — merged</li>
+<li>reducers — combined</li>
+<li>structure:<pre><code>src/ducks/nested/
+  index.js
+  subduck1.js
+  subduck2.js
+</code></pre></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-25">
+    <section class="slide-content"><h3 id="nested-duck-helpers">nested duck: helpers</h3>
+<pre><code class="lang-js"><span class="hljs-comment">// src/utils/ducks.js</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> mergeObjects = <span class="hljs-function"><span class="hljs-params">objects</span> =&gt;</span> <span class="hljs-built_in">Object</span>.assign({}, ...objects);
+
+<span class="hljs-keyword">const</span> augmentSelector = <span class="hljs-function">(<span class="hljs-params">rootSelector, selector</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> selector(rootSelector(state));
+}
+
+<span class="hljs-keyword">const</span> augmentSelectorsReducerFactory = <span class="hljs-function"><span class="hljs-params">selectorsObj</span> =&gt;</span> (state, item) =&gt; {
+  <span class="hljs-keyword">const</span> selectorName = item;
+  <span class="hljs-keyword">const</span> selector = selectorsObj[selectorName];
+  <span class="hljs-keyword">return</span> {
+    ...state,
+    [selectorName]: augmentSelector(rootSelector, selector)
+  }
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> augmentSelectors = <span class="hljs-function">(<span class="hljs-params">rootSelector, selectorsObj</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(selectorsObj).reduce(
+    augmentSelectorsReducerFactory(selectorsObj),
+    {}
+  );
+}
+
+<span class="hljs-comment">// src/utils/index.js</span>
+<span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">"./api"</span>;
+<span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">"./ducks"</span>;
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-26">
+    <section class="slide-content"><h3 id="nested-duck">nested duck</h3>
+<pre><code class="lang-js"><span class="hljs-comment">// src/ducks/nested/index.js</span>
+<span class="hljs-keyword">import</span> { combineReducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> subduck1 <span class="hljs-keyword">from</span> <span class="hljs-string">'./subduck1'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> subduck2 <span class="hljs-keyword">from</span> <span class="hljs-string">'./subduck2'</span>;
+<span class="hljs-keyword">import</span> { mergeObjects, augmentSelectors } <span class="hljs-keyword">from</span> <span class="hljs-string">'../utils'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ns = <span class="hljs-string">'nested'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> shape = mergeObjects([ subduck1.shape, subduck2.shape ]);
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> defaultState = mergeObjects([ subduck1.defaultState, subduck2.defaultState ]);
+
+<span class="hljs-keyword">const</span> root = <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state[ns];
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> selectors = {
+  root,
+  ...augmentSelectors(root, subduck1),
+  ...augmentSelectors(root, subduck2),
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> actions = mergeObjects([subduck1.actions, subduck2.actions]);
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> reducer = combineReducers({
+  ...subduck1.reducer,
+  ...subduck2.reducer,
+});
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-27">
+    <section class="slide-content"><p><img src="https://i.imgur.com/7CbCIQx.jpg" style="max-width: 100%; min-width: 100%;" /></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-28">
+    <section class="slide-content"><h3 id="ducks-recap">ducks recap</h3>
+<ul>
+<li>approach to modularize redux related code</li>
+<li>self contained redux entity</li>
+<li>responsible for its particular part of the state (substate):</li>
+<li>nested one — combination of subducks</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-29">
+    <section class="slide-content"><h3 id="ducks-properties">ducks properties</h3>
+<ul>
+<li>namespace</li>
+<li>shape</li>
+<li>defaultState</li>
+<li>root selector</li>
+<li>selectors</li>
+<li>actions</li>
+<li>raw reducer</li>
+<li>reducer</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-30">
+    <section class="slide-content"><h3 id="further-reading">further reading</h3>
+<ul>
+<li><a href="https://medium.freecodecamp.org/scaling-your-redux-app-with-ducks-6115955638be">Scaling your Redux App with ducks
+</a></li>
+<li><a href="https://github.com/erikras/ducks-modular-redux">Ducks: Redux Reducer Bundles</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-31">
+    <section class="slide-content"><center>
+  <h1>re-ducks</h1>
+  <br />
+  <small>
+    <i>In react we trust</i>
+  </small>
+  <br />
+  <br />
+  <small>
+    by <a href="https://iamstarkov.com">Vladimir Starkov</a>
+    <br>
+    frontend engineer at <a href="https://www.nordnet.se/">Nordnet Bank AB</a>
+  </small>
+</center></section>
+  </div>
+
+  <div class="controls">
+    <div class="arrow prev"></div>
+    <div class="arrow next"></div>
+  </div>
+
+
+  <script type="text/javascript">
+    /**
+ * Returns the current page number of the presentation.
+ */
+function currentPosition() {
+  return parseInt(document.querySelector('.slide:not(.hidden)').id.slice(6));
+}
+
+
+/**
+ * Navigates forward n pages
+ * If n is negative, we will navigate in reverse
+ */
+function navigate(n) {
+  var position = currentPosition();
+  var numSlides = document.getElementsByClassName('slide').length;
+
+  /* Positions are 1-indexed, so we need to add and subtract 1 */
+  var nextPosition = (position - 1 + n) % numSlides + 1;
+
+  /* Normalize nextPosition in-case of a negative modulo result */
+  nextPosition = (nextPosition - 1 + numSlides) % numSlides + 1;
+
+  document.getElementById('slide-' + position).classList.add('hidden');
+  document.getElementById('slide-' + nextPosition).classList.remove('hidden');
+
+  updateProgress();
+  updateURL();
+  updateTabIndex();
+}
+
+
+/**
+ * Updates the current URL to include a hashtag of the current page number.
+ */
+function updateURL() {
+  try {
+    window.history.replaceState({} , null, '#' + currentPosition());
+  } catch (e) {
+    window.location.hash = currentPosition();
+  }
+}
+
+
+/**
+ * Sets the progress indicator.
+ */
+function updateProgress() {
+  var progressBar = document.querySelector('.progress-bar');
+
+  if (progressBar !== null) {
+    var numSlides = document.getElementsByClassName('slide').length;
+    var position = currentPosition() - 1;
+    var percent = (numSlides === 1) ? 100 : 100 * position / (numSlides - 1);
+    progressBar.style.width = percent.toString() + '%';
+  }
+}
+
+
+/**
+ * Removes tabindex property from all links on the current slide, sets
+ * tabindex = -1 for all links on other slides. Prevents slides from appearing
+ * out of control.
+ */
+function updateTabIndex() {
+  var allLinks = document.querySelectorAll('.slide a');
+  var position = currentPosition();
+  var currentPageLinks = document.getElementById('slide-' + position).querySelectorAll('a');
+  var i;
+
+  for (i = 0; i < allLinks.length; i++) {
+    allLinks[i].setAttribute('tabindex', -1);
+  }
+
+  for (i = 0; i < currentPageLinks.length; i++) {
+    currentPageLinks[i].removeAttribute('tabindex');
+  }
+}
+
+/**
+ * Determines whether or not we are currently in full screen mode
+ */
+function isFullScreen() {
+  return document.fullscreenElement ||
+         document.mozFullScreenElement ||
+         document.webkitFullscreenElement ||
+         document.msFullscreenElement;
+}
+
+/**
+ * Toggle fullScreen mode on document element.
+ * Works on chrome (>= 15), firefox (>= 9), ie (>= 11), opera(>= 12.1), safari (>= 5).
+ */
+function toggleFullScreen() {
+  /* Convenient renames */
+  var docElem = document.documentElement;
+  var doc = document;
+
+  docElem.requestFullscreen =
+      docElem.requestFullscreen ||
+      docElem.msRequestFullscreen ||
+      docElem.mozRequestFullScreen ||
+      docElem.webkitRequestFullscreen.bind(docElem, Element.ALLOW_KEYBOARD_INPUT);
+
+  doc.exitFullscreen =
+      doc.exitFullscreen ||
+      doc.msExitFullscreen ||
+      doc.mozCancelFullScreen ||
+      doc.webkitExitFullscreen;
+
+  isFullScreen() ? doc.exitFullscreen() : docElem.requestFullscreen();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Update the tabindex to prevent weird slide transitioning
+  updateTabIndex();
+
+  // If the location hash specifies a page number, go to it.
+  var page = window.location.hash.slice(1);
+  if (page) {
+    navigate(parseInt(page) - 1);
+  }
+
+  document.onkeydown = function (e) {
+    var kc = e.keyCode;
+
+    // left, down, H, J, backspace, PgUp - BACK
+    // up, right, K, L, space, PgDn - FORWARD
+    // enter - FULLSCREEN
+    if (kc === 37 || kc === 40 || kc === 8 || kc === 72 || kc === 74 || kc === 33) {
+      navigate(-1);
+    } else if (kc === 38 || kc === 39 || kc === 32 || kc === 75 || kc === 76 || kc === 34) {
+      navigate(1);
+    } else if (kc === 13) {
+      toggleFullScreen();
+    }
+  };
+
+  if (document.querySelector('.next') && document.querySelector('.prev')) {
+    document.querySelector('.next').onclick = function (e) {
+      e.preventDefault();
+      navigate(1);
+    };
+
+    document.querySelector('.prev').onclick = function (e) {
+      e.preventDefault();
+      navigate(-1);
+    };
+  }
+});
+
+
+  </script>
+</body>
+</html>
