@@ -73,7 +73,7 @@
 ## 6. replacing old ui substate with duck's one
 
 * remove old `uiReducer` from the `rootReducer`
-* rename namespace in ui duck from `ui-test` to `ui`
+* rename namespace in ui duck from `ui-duck` to `ui`
 * state should return to `{ ui: {}, data: {} }`
 
 ## 7. data duck: itemsIds
