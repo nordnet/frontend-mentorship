@@ -26,7 +26,7 @@
 ## 1. ui duck
 
 * create file `src/ducks/index.js`
-* add there `export * as ui from './ui';`
+* add there `import * as ui from './ui';`
 * create file `src/ducks/ui/index.js`
 * [start with namespace `ui-duck` (we will  rename it later)](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#10)
 * [define its shape with prop-types](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#11)
@@ -45,35 +45,35 @@
 * define local `rootReducer` and combine `uiReducer` and `dataReducer`
 * does everything work?
 * `import * as ducks from './ducks'`
-* spread `ducks.reducer` into `rootReducer`
+* spread `ducks.ui.reducer` into `rootReducer`
 * did state change?
 * if you click `toggleTheme` button does both `ui` and `ui-duck` state change?
 
 ## 3. selectors in mapStateToProps
 
 * in `src/components/page/index.js`
-* `import * as ducks from '../../ducks'`
+* `import * as ducks from '../ducks'`
 * change `mapStateToProps` to utilise `ducks.ui.selectors` to select `isDarkTheme`
 * does toggling theme still work?
 
 ## 4. actions in mapDispatchToProps
 
 * in `src/components/header/index.js`
-* `import * as ducks from '../../ducks'`
+* `import * as ducks from '../ducks'`
 * change `mapDispatchToProps` to utilise `ducks.ui.actions`
 * does toggling theme still work?
 
 ## 5. selectors in mapStateToProps #2
 
 * in `/src/components/page-news-list/index.js`
-* `import * as ducks from '../../ducks'`
+* `import * as ducks from '../ducks'`
 * change `mapStateToProps` to utilise `ducks.ui.selectors` to select `itemsToShow`
 * does `itemsToShow` still being taken care of?
 
 ## 6. replacing old ui substate with duck's one
 
 * remove old `uiReducer` from the `rootReducer`
-* rename namespace in ui duck from `ui-duck` to `ui`
+* rename namespace in ui duck from `ui-test` to `ui`
 * state should return to `{ ui: {}, data: {} }`
 
 ## 7. data duck: itemsIds
@@ -117,8 +117,23 @@
 * if you open `/` route does both `data` and `data-duck` state change?
 * if you open `/item/17252585` route does both `data` and `data-duck` state change?
 
-## 11. data duck: connecting item
+## 11. data duck: connecting NewsItem
 
 * in `src/components/news-item/index.js`
-* `import * as ducks from '../ducks'`
+* `import * as ducks from '../../ducks'`
+* change `mapStateToProps` to utilise relevant selector from `ducks.data.selectors`
+* change `mapDispatchToProps` to utilise relevant action from `ducks.data.actions`
 
+
+## 12. data duck: connecting PageNewsList
+
+* in `src/components/page-news-list/index.js`
+* `import * as ducks from '../../ducks'`
+* change `mapStateToProps` to utilise relevant selector from `ducks.data.selectors`
+* change `mapDispatchToProps` to utilise relevant action from `ducks.data.actions`
+
+## 13. replacing old data substate with duck's one
+
+* remove old `dataReducer` from the `rootReducer`
+* rename namespace in data duck from `data-duck` to `data`
+* state should return to `{ ui: {}, data: {} }`
