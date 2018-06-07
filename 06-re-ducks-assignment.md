@@ -104,3 +104,21 @@
 
 
 ## 9. data duck: composition
+
+* create file `src/utils/ducks.js` and update `src/utils/index.js` according to the [slide #25](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#25)
+* create file `src/ducks/data/index.js` and combine `items` and `itemsIds` subducks as stated in a [slide #26](https://nordnet.github.io/frontend-mentorship/06-re-ducks/#26)
+* have a temporary namespace `data-duck` (we will change it later)
+
+## 10. data duck: store
+
+* in `src/index.js`
+* spread `ducks.data.reducer` into `rootReducer`
+* did state change?
+* if you open `/` route does both `data` and `data-duck` state change?
+* if you open `/item/17252585` route does both `data` and `data-duck` state change?
+
+## 11. data duck: connecting item
+
+* in `src/components/news-item/index.js`
+* `import * as ducks from '../ducks'`
+
