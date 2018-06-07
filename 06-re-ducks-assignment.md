@@ -52,21 +52,21 @@
 ## 3. selectors in mapStateToProps
 
 * in `src/components/page/index.js`
-* `import * as ducks from '../ducks'`
+* `import * as ducks from '../../ducks'`
 * change `mapStateToProps` to utilise `ducks.ui.selectors` to select `isDarkTheme`
 * does toggling theme still work?
 
 ## 4. actions in mapDispatchToProps
 
 * in `src/components/header/index.js`
-* `import * as ducks from '../ducks'`
+* `import * as ducks from '../../ducks'`
 * change `mapDispatchToProps` to utilise `ducks.ui.actions`
 * does toggling theme still work?
 
 ## 5. selectors in mapStateToProps #2
 
 * in `/src/components/page-news-list/index.js`
-* `import * as ducks from '../ducks'`
+* `import * as ducks from '../../ducks'`
 * change `mapStateToProps` to utilise `ducks.ui.selectors` to select `itemsToShow`
 * does `itemsToShow` still being taken care of?
 
