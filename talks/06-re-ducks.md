@@ -428,32 +428,17 @@ no more than two level of nestedness
 ### nested duck: helpers
 
 ```js
-// src/utils/ducks.js
-export const mergeObjects = objects => Object.assign({}, ...objects);
-
-const augmentSelector = (rootSelector, selector) => {
-  return state => selector(rootSelector(state));
-}
-
-const augmentSelectorsReducerFactory = (rootSelector, ns, selectorsObj) => (state, item) => {
-  const selectorName = item === 'root' ? `${ns}${item}` : item;
-  const selector = selectorsObj[selectorName];
-  return {
-    ...state,
-    [selectorName]: augmentSelector(rootSelector, selector)
-  }
-};
-
-export const augmentSelectors = (rootSelector, ns, selectorsObj) => {
-  return Object.keys(selectorsObj).reduce(
-    augmentSelectorsReducerFactory(rootSelector, ns, selectorsObj),
-    {}
-  );
-}
-
 // src/utils/index.js
 export * from "./api";
-export * from "./ducks";
+
+export const mapObj = (obj, fn) => Object.keys(obj).reduce(
+  (state, itemKey) => ({ ...state, [itemKey]: fn(obj[itemKey]) }),
+  {}
+)
+
+export const augmentSelectorWith = parentSelector => selector => {
+  return (state, ...restArgs) => selector(parentSelector(state), ...restArgs);
+}
 ```
 
 ---
@@ -462,29 +447,41 @@ export * from "./ducks";
 
 ```js
 // src/ducks/nested/index.js
-import { combineReducers } from 'redux';
-import * as subduck1 from './subduck1';
-import * as subduck2 from './subduck2';
-import { mergeObjects, augmentSelectors } from '../utils';
+import { combineReducers } from "redux";
+import subduck1 from "./subduck1";
+import subduck2 from "./subduck2";
+import { mapObj, augmentSelectorWith } from "../../utils";
 
-export const ns = 'nested';
-
-export const shape = mergeObjects([ subduck1.shape, subduck2.shape ]);
-export const defaultState = mergeObjects([ subduck1.defaultState, subduck2.defaultState ]);
+export const ns = "data";
 
 const root = state => state[ns];
 export const selectors = {
   root,
-  ...augmentSelectors(root, subduck1.ns, subduck1.actions),
-  ...augmentSelectors(root, subduck1.ns, subduck2.actions),
+};
+
+export const rawReducer = combineReducers({
+  ...subduck1.reducer,
+  ...subduck2.reducer
+});
+
+const reducer = {
+  [ns]: rawReducer
 }
 
-export const actions = mergeObjects([subduck1.actions, subduck2.actions]);
-
-export const reducer = combineReducers({
-  ...subduck1.reducer,
-  ...subduck2.reducer,
-});
+export default {
+  ns,
+  selectors,
+  rawReducer,
+  reducer,
+  subduck1: {
+    ...subduck1,
+    selectors: mapObj(subduck1.selectors, augmentSelectorWith(root)),
+  },
+  subduck2: {
+    ...subduck2,
+    selectors: mapObj(subduck2.selectors, augmentSelectorWith(root)),
+  },
+};
 ```
 
 ---
