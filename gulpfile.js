@@ -11,7 +11,8 @@ const talks = [
   '03-async',
   '04-redux',
   '05-react-redux',
-  '06-re-ducks'
+  '06-re-ducks',
+  '07-redux-middlewares',
 ];
 
 gulp.task('pretalks', done => {
