@@ -744,61 +744,58 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExampleDashboard);
   </div>
   <div class="slide hidden -" id="slide-25">
     <section class="slide-content"><h3 id="nested-duck-helpers">nested duck: helpers</h3>
-<pre><code class="lang-js"><span class="hljs-comment">// src/utils/ducks.js</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> mergeObjects = <span class="hljs-function"><span class="hljs-params">objects</span> =&gt;</span> <span class="hljs-built_in">Object</span>.assign({}, ...objects);
-
-<span class="hljs-keyword">const</span> augmentSelector = <span class="hljs-function">(<span class="hljs-params">rootSelector, selector</span>) =&gt;</span> {
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> selector(rootSelector(state));
-}
-
-<span class="hljs-keyword">const</span> augmentSelectorsReducerFactory = <span class="hljs-function">(<span class="hljs-params">rootSelector, ns, selectorsObj</span>) =&gt;</span> (state, item) =&gt; {
-  <span class="hljs-keyword">const</span> selectorName = item === <span class="hljs-string">'root'</span> ? <span class="hljs-string">`<span class="hljs-subst">${ns}</span><span class="hljs-subst">${item}</span>`</span> : item;
-  <span class="hljs-keyword">const</span> selector = selectorsObj[selectorName];
-  <span class="hljs-keyword">return</span> {
-    ...state,
-    [selectorName]: augmentSelector(rootSelector, selector)
-  }
-};
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> augmentSelectors = <span class="hljs-function">(<span class="hljs-params">rootSelector, ns, selectorsObj</span>) =&gt;</span> {
-  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(selectorsObj).reduce(
-    augmentSelectorsReducerFactory(rootSelector, ns, selectorsObj),
-    {}
-  );
-}
-
-<span class="hljs-comment">// src/utils/index.js</span>
+<pre><code class="lang-js"><span class="hljs-comment">// src/utils/index.js</span>
 <span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">"./api"</span>;
-<span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">"./ducks"</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> mapObj = <span class="hljs-function">(<span class="hljs-params">obj, fn</span>) =&gt;</span> <span class="hljs-built_in">Object</span>.keys(obj).reduce(
+  <span class="hljs-function">(<span class="hljs-params">state, itemKey</span>) =&gt;</span> ({ ...state, [itemKey]: fn(obj[itemKey]) }),
+  {}
+)
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> augmentSelectorWith = <span class="hljs-function"><span class="hljs-params">parentSelector</span> =&gt;</span> selector =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">state, ...restArgs</span>) =&gt;</span> selector(parentSelector(state), ...restArgs);
+}
 </code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-26">
     <section class="slide-content"><h3 id="nested-duck">nested duck</h3>
 <pre><code class="lang-js"><span class="hljs-comment">// src/ducks/nested/index.js</span>
-<span class="hljs-keyword">import</span> { combineReducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux'</span>;
-<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> subduck1 <span class="hljs-keyword">from</span> <span class="hljs-string">'./subduck1'</span>;
-<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> subduck2 <span class="hljs-keyword">from</span> <span class="hljs-string">'./subduck2'</span>;
-<span class="hljs-keyword">import</span> { mergeObjects, augmentSelectors } <span class="hljs-keyword">from</span> <span class="hljs-string">'../utils'</span>;
+<span class="hljs-keyword">import</span> { combineReducers } <span class="hljs-keyword">from</span> <span class="hljs-string">"redux"</span>;
+<span class="hljs-keyword">import</span> subduck1 <span class="hljs-keyword">from</span> <span class="hljs-string">"./subduck1"</span>;
+<span class="hljs-keyword">import</span> subduck2 <span class="hljs-keyword">from</span> <span class="hljs-string">"./subduck2"</span>;
+<span class="hljs-keyword">import</span> { mapObj, augmentSelectorWith } <span class="hljs-keyword">from</span> <span class="hljs-string">"../../utils"</span>;
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ns = <span class="hljs-string">'nested'</span>;
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> shape = mergeObjects([ subduck1.shape, subduck2.shape ]);
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> defaultState = mergeObjects([ subduck1.defaultState, subduck2.defaultState ]);
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ns = <span class="hljs-string">"data"</span>;
 
 <span class="hljs-keyword">const</span> root = <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state[ns];
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> selectors = {
   root,
-  ...augmentSelectors(root, subduck1.ns, subduck1.actions),
-  ...augmentSelectors(root, subduck1.ns, subduck2.actions),
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> rawReducer = combineReducers({
+  ...subduck1.reducer,
+  ...subduck2.reducer
+});
+
+<span class="hljs-keyword">const</span> reducer = {
+  [ns]: rawReducer
 }
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> actions = mergeObjects([subduck1.actions, subduck2.actions]);
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> reducer = combineReducers({
-  ...subduck1.reducer,
-  ...subduck2.reducer,
-});
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  ns,
+  selectors,
+  rawReducer,
+  reducer,
+  <span class="hljs-attr">subduck1</span>: {
+    ...subduck1,
+    <span class="hljs-attr">selectors</span>: mapObj(subduck1.selectors, augmentSelectorWith(root)),
+  },
+  <span class="hljs-attr">subduck2</span>: {
+    ...subduck2,
+    <span class="hljs-attr">selectors</span>: mapObj(subduck2.selectors, augmentSelectorWith(root)),
+  },
+};
 </code></pre>
 </section>
   </div>
