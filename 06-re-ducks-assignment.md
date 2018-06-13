@@ -121,19 +121,26 @@
 
 * in `src/components/news-item/index.js`
 * `import * as ducks from '../../ducks'`
-* change `mapStateToProps` to utilise relevant selector from `ducks.data.selectors`
-* change `mapDispatchToProps` to utilise relevant action from `ducks.data.actions`
+* change `mapStateToProps` to utilise relevant selector from `ducks.data.items.selectors`
+* change `mapDispatchToProps` to utilise relevant action from `ducks.data.items.actions`
 
 
 ## 12. data duck: connecting PageNewsList
 
 * in `src/components/page-news-list/index.js`
 * `import * as ducks from '../../ducks'`
-* change `mapStateToProps` to utilise relevant selector from `ducks.data.selectors`
-* change `mapDispatchToProps` to utilise relevant action from `ducks.data.actions`
+* change `mapStateToProps` to utilise relevant selector from `ducks.data.itemsIds.selectors`
+* change `mapDispatchToProps` to utilise relevant action from `ducks.data.itemsIds.actions`
 
 ## 13. replacing old data substate with duck's one
 
 * remove old `dataReducer` from the `rootReducer`
 * rename namespace in data duck from `data-duck` to `data`
 * state should return to `{ ui: {}, data: {} }`
+
+
+## 14. cleaning up
+
+* remove all imports of standalone `actions` and `reducers` files.
+* remove files itself
+* does it still work?
