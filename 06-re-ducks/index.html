@@ -744,16 +744,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExampleDashboard);
   <div class="slide hidden -" id="slide-25">
     <section class="slide-content"><h3 id="nested-duck-helpers">nested duck: helpers</h3>
 <pre><code class="lang-js"><span class="hljs-comment">// src/utils/index.js</span>
-<span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">"./api"</span>;
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> mapObj = <span class="hljs-function">(<span class="hljs-params">obj, fn</span>) =&gt;</span> <span class="hljs-built_in">Object</span>.keys(obj).reduce(
-  <span class="hljs-function">(<span class="hljs-params">state, itemKey</span>) =&gt;</span> ({ ...state, [itemKey]: fn(obj[itemKey]) }),
-  {}
-)
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> mapObj = <span class="hljs-function">(<span class="hljs-params">obj, fn</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(obj).reduce(
+    <span class="hljs-function">(<span class="hljs-params">state, itemKey</span>) =&gt;</span> ({ ...state, [itemKey]: fn(obj[itemKey]) }),
+    {}
+  );
+}
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> augmentSelectorWith = <span class="hljs-function"><span class="hljs-params">parentSelector</span> =&gt;</span> selector =&gt; {
-  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">state, ...restArgs</span>) =&gt;</span> selector(parentSelector(state), ...restArgs);
-}
+  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">state, ...restArgs</span>) =&gt;</span> selector(
+    parentSelector(state),
+    ...restArgs
+  );
+};
 </code></pre>
 </section>
   </div>
