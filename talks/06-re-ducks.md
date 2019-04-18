@@ -56,7 +56,7 @@ Redux is a predictable state container for JavaScript apps
 
 ### reasoning
 
-* doesn scale
+* scales better
 * easier to reason about (read, understand and test)
 * implementation details doesnt leak
 * separation of concerns vs separation of tech
@@ -150,7 +150,7 @@ export const ns = 'ui';
 // example duck's default state
 import PropTypes from 'prop-types';
 export const shape = {
-  lang: PropTypes.string.isRequired,
+  lang: PropTypes.string,
 };
 ```
 
@@ -205,11 +205,6 @@ export const selectors = {
 actions types to be shared between actions and reducers. it is usually good idea to namespace them as well
 
 ```js
-export const updateLang = value => ({
-  type: "UPDATE_LANG",
-  payload: value
-});
-
 // example duck's types
 export const types = {
   updateLang: `${ns} / UPDATE_LANG`,
@@ -263,7 +258,7 @@ import PropTypes from 'prop-types';
 export const ns = 'ui';
 
 export const shape = {
-  lang: PropTypes.string.isRequired,
+  lang: PropTypes.string,
 };
 
 export const defaultState = {
@@ -319,6 +314,10 @@ export reducer = {
 ```js
 // src/ducks/index.js
 import * as ui from './ui';
+
+export {
+  ui,
+}
 // import * as example from './example';
 ```
 
@@ -429,16 +428,19 @@ no more than two level of nestedness
 
 ```js
 // src/utils/index.js
-export * from "./api";
-
-export const mapObj = (obj, fn) => Object.keys(obj).reduce(
-  (state, itemKey) => ({ ...state, [itemKey]: fn(obj[itemKey]) }),
-  {}
-)
+export const mapObj = (obj, fn) => {
+  return Object.keys(obj).reduce(
+    (state, itemKey) => ({ ...state, [itemKey]: fn(obj[itemKey]) }),
+    {}
+  );
+}
 
 export const augmentSelectorWith = parentSelector => selector => {
-  return (state, ...restArgs) => selector(parentSelector(state), ...restArgs);
-}
+  return (state, ...restArgs) => selector(
+    parentSelector(state),
+    ...restArgs
+  );
+};
 ```
 
 ---
