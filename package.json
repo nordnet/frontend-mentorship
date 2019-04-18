@@ -5,6 +5,7 @@
   "main": "index.js",
   "repository": "https://github.com/nordnet/frontend-mentorship",
   "scripts": {
+    "dev": "gulp watch",
     "prebuild": "rm -rf build",
     "build": "gulp build",
     "predeploy": "npm run build",
