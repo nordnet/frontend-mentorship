@@ -420,7 +420,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   <div class="slide hidden -" id="slide-6">
     <section class="slide-content"><h3 id="reasoning">reasoning</h3>
 <ul>
-<li>doesn scale</li>
+<li>scales better</li>
 <li>easier to reason about (read, understand and test)</li>
 <li>implementation details doesnt leak</li>
 <li>separation of concerns vs separation of tech</li>
@@ -496,7 +496,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 <span class="hljs-comment">// example duck's default state</span>
 <span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> shape = {
-  <span class="hljs-attr">lang</span>: PropTypes.string.isRequired,
+  <span class="hljs-attr">lang</span>: PropTypes.string,
 };
 </code></pre>
 </section>
@@ -541,12 +541,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   <div class="slide hidden -" id="slide-14">
     <section class="slide-content"><h3 id="duck-action-types">duck: action types</h3>
 <p>actions types to be shared between actions and reducers. it is usually good idea to namespace them as well</p>
-<pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> updateLang = <span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> ({
-  <span class="hljs-attr">type</span>: <span class="hljs-string">"UPDATE_LANG"</span>,
-  <span class="hljs-attr">payload</span>: value
-});
-
-<span class="hljs-comment">// example duck's types</span>
+<pre><code class="lang-js"><span class="hljs-comment">// example duck's types</span>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> types = {
   <span class="hljs-attr">updateLang</span>: <span class="hljs-string">`<span class="hljs-subst">${ns}</span> / UPDATE_LANG`</span>,
 };
@@ -593,7 +588,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ns = <span class="hljs-string">'ui'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> shape = {
-  <span class="hljs-attr">lang</span>: PropTypes.string.isRequired,
+  <span class="hljs-attr">lang</span>: PropTypes.string,
 };
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> defaultState = {
@@ -645,6 +640,10 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
     <section class="slide-content"><h3 id="ducks-re-export-entry-point">ducks: re-export entry point</h3>
 <pre><code class="lang-js"><span class="hljs-comment">// src/ducks/index.js</span>
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> ui <span class="hljs-keyword">from</span> <span class="hljs-string">'./ui'</span>;
+
+<span class="hljs-keyword">export</span> {
+  ui,
+}
 <span class="hljs-comment">// import * as example from './example';</span>
 </code></pre>
 </section>
