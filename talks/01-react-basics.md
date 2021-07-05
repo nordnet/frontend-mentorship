@@ -123,7 +123,7 @@ hurray
 * Either function or class or stateless and stateful, respectively
 * Takes in `props`
 * functional components can only rely on `props`
-* class-based components can have its own state
+* class-based components can have their own states
 * class-based components can have life-cycle methods
 * special `children` props to nest components
 * returns stuff to render
